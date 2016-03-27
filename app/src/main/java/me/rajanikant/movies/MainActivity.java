@@ -11,7 +11,7 @@ import butterknife.InjectView;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener{
 
-    @InjectView(R.id.actiity_main_toolbar)
+    @InjectView(R.id.activity_main_toolbar)
     Toolbar toolbar;
 
     @Override
