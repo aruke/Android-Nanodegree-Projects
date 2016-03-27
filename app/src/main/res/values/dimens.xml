@@ -2,5 +2,10 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- Specific for devices with width <=480dp -->
     <dimen name="item_movie_card_height">240dp</dimen>
+    <dimen name="margin_movie_card">2dp</dimen>
+    <dimen name="padding_gradient_overlay">8dp</dimen>
+    <dimen name="margin_text_rating">4dp</dimen>
+    <dimen name="size_text_rating">16sp</dimen>
 </resources>
