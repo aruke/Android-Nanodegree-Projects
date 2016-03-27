@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener{
 
     @InjectView(R.id.actiity_main_toolbar)
     Toolbar toolbar;
@@ -20,6 +20,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
+
+        //  Add MovieGridFragment
+        addMovieGridFragment();
+    }
+
+    private void addMovieGridFragment(){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.activity_main_content_layout, MovieGridFragment.newInstance())
+                .commit();
     }
 
     @Override
@@ -42,5 +52,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onMovieItemClicked() {
+
     }
 }
