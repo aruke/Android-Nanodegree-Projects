@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -18,6 +20,12 @@ import butterknife.InjectView;
  */
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
 
+    private List<Movie> movies;
+
+    public MovieAdapter(List<Movie> movies) {
+        this.movies = movies;
+    }
+
     @Override
     public MovieHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
@@ -27,11 +35,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
     @Override
     public void onBindViewHolder(MovieHolder holder, int position) {
+        Movie movie = movies.get(position);
+
+        holder.textRating.setText(String.valueOf(movie.getVoteAverage()));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return movies.size();
     }
 
     // View Holder class for movies
