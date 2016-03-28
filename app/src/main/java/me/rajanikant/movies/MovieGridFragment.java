@@ -56,7 +56,7 @@ public class MovieGridFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
-        MovieAdapter adapter = new MovieAdapter(new ArrayList<Movie>());
+        MovieAdapter adapter = new MovieAdapter(getActivity(), new ArrayList<Movie>());
         recyclerView.setAdapter(adapter);
 
         populateMovies();
@@ -86,7 +86,7 @@ public class MovieGridFragment extends Fragment {
                             for (Movie movie : movieApiResponse.getResults()) {
                                 Log.e(LOG_TAG, "onResponse: movie title" + String.valueOf(movie.getTitle()));
                             }
-                            MovieAdapter adapter = new MovieAdapter(movieApiResponse.getResults());
+                            MovieAdapter adapter = new MovieAdapter(getActivity(), movieApiResponse.getResults());
                             recyclerView.setAdapter(adapter);
                         } else {
                             Log.e(LOG_TAG, "onResponse: results " + movieApiResponse.getResults());

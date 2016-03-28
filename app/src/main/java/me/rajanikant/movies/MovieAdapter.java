@@ -1,11 +1,14 @@
 package me.rajanikant.movies;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -20,9 +23,11 @@ import butterknife.InjectView;
  */
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
 
+    private Context context;
     private List<Movie> movies;
 
-    public MovieAdapter(List<Movie> movies) {
+    public MovieAdapter(Context context, List<Movie> movies) {
+        this.context = context;
         this.movies = movies;
     }
 
@@ -38,6 +43,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         Movie movie = movies.get(position);
 
         holder.textRating.setText(String.valueOf(movie.getVoteAverage()));
+        String posterUrl = "http://image.tmdb.org/t/p/w185" + movie.getPosterPath();
+        Picasso.with(context).load(posterUrl).error(R.mipmap.ic_launcher).into(holder.imagePoster);
     }
 
     @Override
