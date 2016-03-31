@@ -28,6 +28,7 @@ public class MovieGridFragment extends Fragment {
     RecyclerView recyclerView;
 
     private OnFragmentInteractionListener mListener;
+    private OnMovieCardClickListener cardListener;
 
     public MovieGridFragment() {
         // Required empty public constructor
@@ -86,7 +87,7 @@ public class MovieGridFragment extends Fragment {
                             for (Movie movie : movieApiResponse.getResults()) {
                                 Log.e(LOG_TAG, "onResponse: movie title" + String.valueOf(movie.getTitle()));
                             }
-                            MovieAdapter adapter = new MovieAdapter(getActivity(), movieApiResponse.getResults());
+                            MovieAdapter adapter = new MovieAdapter(getActivity(), movieApiResponse.getResults(), cardListener);
                             recyclerView.setAdapter(adapter);
                         } else {
                             Log.e(LOG_TAG, "onResponse: results " + movieApiResponse.getResults());
@@ -110,12 +111,19 @@ public class MovieGridFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        cardListener = new OnMovieCardClickListener() {
+            @Override
+            public void onMovieCardClicked(Movie movie) {
+                mListener.onMovieItemClicked(movie);
+            }
+        };
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        cardListener = null;
     }
 
     @Override

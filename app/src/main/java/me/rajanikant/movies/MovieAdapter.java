@@ -1,6 +1,7 @@
 package me.rajanikant.movies;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +26,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
     private Context context;
     private List<Movie> movies;
+    private OnMovieCardClickListener cardListener;
 
     public MovieAdapter(Context context, List<Movie> movies) {
         this.context = context;
         this.movies = movies;
+    }
+
+    public MovieAdapter(Context context, List<Movie> movies, OnMovieCardClickListener cardListener) {
+        this.context = context;
+        this.movies = movies;
+        this.cardListener = cardListener;
     }
 
     @Override
@@ -40,11 +48,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
     @Override
     public void onBindViewHolder(MovieHolder holder, int position) {
-        Movie movie = movies.get(position);
+        final Movie movie = movies.get(position);
 
         holder.textRating.setText(String.valueOf(movie.getVoteAverage()));
         String posterUrl = "http://image.tmdb.org/t/p/w185" + movie.getPosterPath();
         Picasso.with(context).load(posterUrl).error(R.mipmap.ic_launcher).into(holder.imagePoster);
+
+        holder.cardMovie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cardListener.onMovieCardClicked(movie);
+            }
+        });
     }
 
     @Override
@@ -55,6 +70,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     // View Holder class for movies
     static class MovieHolder extends RecyclerView.ViewHolder {
 
+        @InjectView(R.id.item_movie_card_root)
+        CardView cardMovie;
         @InjectView(R.id.item_movie_image_small_text)
         TextView textRating;
         @InjectView(R.id.item_movie_image_small_icon)

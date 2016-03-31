@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     }
 
     @Override
-    public void onMovieItemClicked() {
-
+    public void onMovieItemClicked(Movie movie) {
+        Toast.makeText(MainActivity.this, "Movie item clicked with title " + movie.getTitle(), Toast.LENGTH_SHORT).show();
     }
 }

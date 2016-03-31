@@ -1,5 +1,5 @@
 package me.rajanikant.movies;
 
 public interface OnFragmentInteractionListener {
-        void onMovieItemClicked();
+        void onMovieItemClicked(Movie movie);
     }
