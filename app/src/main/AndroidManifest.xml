@@ -25,8 +25,7 @@
             android:name=".MovieDetailsActivity"
             android:label="@string/title_activity_movie_details"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            tools:targetApi="jelly_bean">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="me.rajanikant.movies.MainActivity" />
