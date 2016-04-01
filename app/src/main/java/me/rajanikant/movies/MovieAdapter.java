@@ -28,15 +28,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     private List<Movie> movies;
     private OnMovieCardClickListener cardListener;
 
-    public MovieAdapter(Context context, List<Movie> movies) {
-        this.context = context;
-        this.movies = movies;
-    }
-
     public MovieAdapter(Context context, List<Movie> movies, OnMovieCardClickListener cardListener) {
         this.context = context;
         this.movies = movies;
         this.cardListener = cardListener;
+    }
+
+    public void addMovies(List<Movie> movies) {
+        int endPosition = this.movies.size();
+        int insertedItems = movies.size();
+        this.movies.addAll(movies);
+        notifyItemRangeInserted(endPosition, insertedItems);
     }
 
     @Override

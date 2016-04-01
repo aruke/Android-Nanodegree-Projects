@@ -29,6 +29,7 @@ public class MovieGridFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private OnMovieCardClickListener cardListener;
+    private MovieAdapter adapter;
 
     public MovieGridFragment() {
         // Required empty public constructor
@@ -57,14 +58,19 @@ public class MovieGridFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
 
-        MovieAdapter adapter = new MovieAdapter(getActivity(), new ArrayList<Movie>());
+        adapter = new MovieAdapter(getActivity(), new ArrayList<Movie>(), cardListener);
         recyclerView.setAdapter(adapter);
-
-        populateMovies();
+        recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                populateMovies(currentPage);
+            }
+        });
+        populateMovies(1);
         return view;
     }
 
-    private void populateMovies() {
+    private void populateMovies(int page) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.themoviedb.org")
@@ -73,7 +79,7 @@ public class MovieGridFragment extends Fragment {
 
         MovieApiInterface movieApiCall = retrofit.create(MovieApiInterface.class);
 
-        movieApiCall.getPopularMovies(BuildConfig.TMDB_API_TOKEN).enqueue(
+        movieApiCall.getPopularMovies(BuildConfig.TMDB_API_TOKEN, page).enqueue(
                 new Callback<MovieApiResponse>() {
                     @Override
                     public void onResponse(Call<MovieApiResponse> call, Response<MovieApiResponse> response) {
@@ -87,8 +93,7 @@ public class MovieGridFragment extends Fragment {
                             for (Movie movie : movieApiResponse.getResults()) {
                                 Log.e(LOG_TAG, "onResponse: movie title" + String.valueOf(movie.getTitle()));
                             }
-                            MovieAdapter adapter = new MovieAdapter(getActivity(), movieApiResponse.getResults(), cardListener);
-                            recyclerView.setAdapter(adapter);
+                            adapter.addMovies(movieApiResponse.getResults());
                         } else {
                             Log.e(LOG_TAG, "onResponse: results " + movieApiResponse.getResults());
                         }

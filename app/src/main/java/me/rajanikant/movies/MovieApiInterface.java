@@ -15,7 +15,7 @@ public interface MovieApiInterface {
 
     @Headers({"Accept: application/json"})
     @GET("/3/movie/popular")
-    Call<MovieApiResponse> getPopularMovies(@Query("api_key")String apiKey);
+    Call<MovieApiResponse> getPopularMovies(@Query("api_key")String apiKey, @Query("page")int page);
 
     @GET("")
     Call<MovieApiResponse> getTopRatedMovies();
