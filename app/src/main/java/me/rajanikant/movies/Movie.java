@@ -136,4 +136,12 @@ class Movie {
     public void setVoteCount(int voteCount) {
         this.voteCount = voteCount;
     }
+
+    public String getBackdropPath() {
+        return backdropPath;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
+    }
 }
