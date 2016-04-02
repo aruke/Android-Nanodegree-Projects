@@ -60,6 +60,12 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     public void onMovieItemClicked(Movie movie) {
         Toast.makeText(MainActivity.this, "Movie item clicked with title " + movie.getTitle(), Toast.LENGTH_SHORT).show();
         Intent detailIntent = new Intent(this, MovieDetailsActivity.class);
+        detailIntent.putExtra(Constants.INTENT_EXTRA_MOVIE_TITLE, movie.getTitle());
+        detailIntent.putExtra(Constants.INTENT_EXTRA_MOVIE_OVERVIEW, movie.getOverview());
+        detailIntent.putExtra(Constants.INTENT_EXTRA_MOVIE_RATINGS, movie.getVoteAverage());
+        detailIntent.putExtra(Constants.INTENT_EXTRA_MOVIE_RELEASE_DATE, movie.getReleaseDate());
+        detailIntent.putExtra(Constants.INTENT_EXTRA_MOVIE_POSTER_PATH, movie.getPosterPath());
+        detailIntent.putExtra(Constants.INTENT_EXTRA_MOVIE_BACKDROP_PATH, movie.getBackdropPath());
         startActivity(detailIntent);
     }
 }
