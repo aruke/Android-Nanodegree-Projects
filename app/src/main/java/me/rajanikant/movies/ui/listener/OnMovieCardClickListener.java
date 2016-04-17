@@ -1,4 +1,6 @@
-package me.rajanikant.movies;
+package me.rajanikant.movies.ui.listener;
+
+import me.rajanikant.movies.api.model.Movie;
 
 /**
  * Project : Popular Movies

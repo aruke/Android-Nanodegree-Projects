@@ -1,4 +1,4 @@
-package me.rajanikant.movies;
+package me.rajanikant.movies.api;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

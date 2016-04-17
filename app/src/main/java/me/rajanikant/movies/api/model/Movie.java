@@ -1,4 +1,4 @@
-package me.rajanikant.movies;
+package me.rajanikant.movies.api.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
  * Date : 28 Mar 2016
  * Time : 00:26
  */
-class Movie {
+public class Movie {
 
     @SerializedName("id")
     int id;

@@ -1,4 +1,4 @@
-package me.rajanikant.movies;
+package me.rajanikant.movies.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
@@ -15,6 +15,9 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.rajanikant.movies.api.model.Movie;
+import me.rajanikant.movies.ui.listener.OnMovieCardClickListener;
+import me.rajanikant.movies.R;
 
 /**
  * Project : Popular Movies

@@ -1,4 +1,4 @@
-package me.rajanikant.movies;
+package me.rajanikant.movies.ui.listener;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

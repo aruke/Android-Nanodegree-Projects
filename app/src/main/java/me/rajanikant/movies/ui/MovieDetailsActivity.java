@@ -1,4 +1,4 @@
-package me.rajanikant.movies;
+package me.rajanikant.movies.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.rajanikant.movies.Constants;
+import me.rajanikant.movies.R;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 

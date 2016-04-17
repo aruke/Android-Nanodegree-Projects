@@ -1,4 +1,4 @@
-package me.rajanikant.movies;
+package me.rajanikant.movies.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,10 @@ import android.widget.Toast;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.rajanikant.movies.Constants;
+import me.rajanikant.movies.api.model.Movie;
+import me.rajanikant.movies.ui.listener.OnFragmentInteractionListener;
+import me.rajanikant.movies.R;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
 

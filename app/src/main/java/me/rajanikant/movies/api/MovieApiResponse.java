@@ -1,6 +1,8 @@
-package me.rajanikant.movies;
+package me.rajanikant.movies.api;
 
 import java.util.List;
+
+import me.rajanikant.movies.api.model.Movie;
 
 /**
  * Project : Popular Movies

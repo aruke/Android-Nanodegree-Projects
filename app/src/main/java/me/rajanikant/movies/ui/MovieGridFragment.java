@@ -1,4 +1,4 @@
-package me.rajanikant.movies;
+package me.rajanikant.movies.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +14,15 @@ import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.rajanikant.movies.BuildConfig;
+import me.rajanikant.movies.ui.listener.EndlessRecyclerOnScrollListener;
+import me.rajanikant.movies.api.model.Movie;
+import me.rajanikant.movies.ui.adapter.MovieAdapter;
+import me.rajanikant.movies.api.MovieApiInterface;
+import me.rajanikant.movies.api.MovieApiResponse;
+import me.rajanikant.movies.ui.listener.OnFragmentInteractionListener;
+import me.rajanikant.movies.ui.listener.OnMovieCardClickListener;
+import me.rajanikant.movies.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
