@@ -1,5 +1,8 @@
 package me.rajanikant.movies.api.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -8,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
  * Date : 28 Mar 2016
  * Time : 00:26
  */
-public class Movie {
+public class Movie implements Parcelable {
 
     @SerializedName("id")
     int id;
@@ -47,6 +50,54 @@ public class Movie {
     int voteCount;
 
     public Movie() {
+    }
+
+    protected Movie(Parcel in) {
+        id = in.readInt();
+        originalLanguage = in.readString();
+        originalTitle = in.readString();
+        overview = in.readString();
+        releaseDate = in.readString();
+        posterPath = in.readString();
+        backdropPath = in.readString();
+        popularity = in.readDouble();
+        title = in.readString();
+        video = in.readByte() != 0;
+        voteAverage = in.readDouble();
+        voteCount = in.readInt();
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(originalLanguage);
+        dest.writeString(originalTitle);
+        dest.writeString(overview);
+        dest.writeString(releaseDate);
+        dest.writeString(posterPath);
+        dest.writeString(backdropPath);
+        dest.writeDouble(popularity);
+        dest.writeString(title);
+        dest.writeByte((byte) (video ? 1 : 0));
+        dest.writeDouble(voteAverage);
+        dest.writeInt(voteCount);
     }
 
     public int getId() {

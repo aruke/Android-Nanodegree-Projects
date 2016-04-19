@@ -6,6 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +19,8 @@ import me.rajanikant.movies.Constants;
 import me.rajanikant.movies.R;
 
 public class MovieDetailsActivity extends AppCompatActivity {
+
+    private static final String TAG = "MovieDetailsActivity";
 
     @InjectView(R.id.activity_movie_details_toolbar)
     Toolbar toolbar;
@@ -59,5 +63,16 @@ public class MovieDetailsActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(title);
         }
+
+        Log.d(TAG, "onCreate: ");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
