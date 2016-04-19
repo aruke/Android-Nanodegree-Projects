@@ -14,4 +14,7 @@ public class Constants {
     public static final String INTENT_EXTRA_MOVIE_POSTER_PATH = "movie-poster-path";
     public static final String INTENT_EXTRA_MOVIE_BACKDROP_PATH = "movie-backdrop-path";
     public static final String INTENT_EXTRA_MOVIE_RATINGS = "movie-ratings";
+
+    public static final String MOVIE_TAG_POPULAR = "popular";
+    public static final String MOVIE_TAG_TOP_RATED = "top_rated";
 }

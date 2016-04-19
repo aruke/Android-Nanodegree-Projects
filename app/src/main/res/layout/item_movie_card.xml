@@ -14,22 +14,21 @@
             android:id="@+id/item_movie_image_poster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/movie_poster" />
+            android:contentDescription="@string/movie_poster"
+            android:scaleType="centerCrop" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="@dimen/padding_gradient_overlay"
+            android:background="@drawable/gradient_overlay"
             android:gravity="bottom|start"
-            android:background="@drawable/gradient_overlay">
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_gradient_overlay">
 
             <ImageView
                 android:id="@+id/item_movie_image_small_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_rating"
                 android:contentDescription="@string/rating_icon" />
 
             <TextView

@@ -2,11 +2,20 @@ package me.rajanikant.movies.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -17,8 +26,14 @@ import me.rajanikant.movies.R;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
 
+    private static final String TAG = "MainActivity";
+
     @InjectView(R.id.activity_main_toolbar)
     Toolbar toolbar;
+    @InjectView(R.id.activity_main_tab_layout)
+    TabLayout tabLayout;
+    @InjectView(R.id.activity_main_view_pager)
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +42,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
 
-        //  Add MovieGridFragment
-        addMovieGridFragment();
-    }
-
-    private void addMovieGridFragment() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.activity_main_content_layout, MovieGridFragment.newInstance())
-                .commit();
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
@@ -71,5 +80,33 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         detailIntent.putExtra(Constants.INTENT_EXTRA_MOVIE_POSTER_PATH, movie.getPosterPath());
         detailIntent.putExtra(Constants.INTENT_EXTRA_MOVIE_BACKDROP_PATH, movie.getBackdropPath());
         startActivity(detailIntent);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> fragmentList = new ArrayList<>();
+        private final List<String> fragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+            fragmentList.add(MovieGridFragment.newInstance(Constants.MOVIE_TAG_TOP_RATED));
+            fragmentTitleList.add(getString(R.string.movie_tag_top_rated));
+            fragmentList.add(MovieGridFragment.newInstance(Constants.MOVIE_TAG_POPULAR));
+            fragmentTitleList.add(getString(R.string.movie_tag_popular));
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return fragmentTitleList.get(position);
+        }
     }
 }

@@ -15,6 +15,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.rajanikant.movies.Constants;
 import me.rajanikant.movies.api.model.Movie;
 import me.rajanikant.movies.ui.listener.OnMovieCardClickListener;
 import me.rajanikant.movies.R;
@@ -30,11 +31,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     private Context context;
     private List<Movie> movies;
     private OnMovieCardClickListener cardListener;
+    private String movieTag;
 
-    public MovieAdapter(Context context, List<Movie> movies, OnMovieCardClickListener cardListener) {
+    public MovieAdapter(Context context, List<Movie> movies, OnMovieCardClickListener cardListener, String movieTag) {
         this.context = context;
         this.movies = movies;
         this.cardListener = cardListener;
+        this.movieTag = movieTag;
     }
 
     public void addMovies(List<Movie> movies) {
@@ -58,6 +61,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         holder.textRating.setText(String.valueOf(movie.getVoteAverage()));
         String posterUrl = "http://image.tmdb.org/t/p/w185" + movie.getPosterPath();
         Picasso.with(context).load(posterUrl).error(R.mipmap.ic_launcher).into(holder.imagePoster);
+        if (movieTag.equals(Constants.MOVIE_TAG_POPULAR))
+            holder.imageRating.setImageResource(R.drawable.ic_popularity);
+        else
+            holder.imageRating.setImageResource(R.drawable.ic_rating);
 
         holder.cardMovie.setOnClickListener(new View.OnClickListener() {
             @Override

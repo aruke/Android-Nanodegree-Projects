@@ -3,6 +3,7 @@ package me.rajanikant.movies.api;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -14,10 +15,7 @@ import retrofit2.http.Query;
 public interface MovieApiInterface {
 
     @Headers({"Accept: application/json"})
-    @GET("/3/movie/popular")
-    Call<MovieApiResponse> getPopularMovies(@Query("api_key")String apiKey, @Query("page")int page);
-
-    @GET("")
-    Call<MovieApiResponse> getTopRatedMovies();
+    @GET("/3/movie/{tag}")
+    Call<MovieApiResponse> getPopularMovies(@Path("tag") String tag, @Query("api_key") String apiKey, @Query("page") int page);
 
 }

@@ -32,6 +32,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MovieGridFragment extends Fragment {
 
     private static final String LOG_TAG = "MovieGridFragment";
+    private static final String KEY_MOVIES = "movies";
+    private static final String ARG_TAG = "tag";
 
     @InjectView(R.id.fragment_movie_grid_recycler_view)
     RecyclerView recyclerView;
@@ -39,14 +41,18 @@ public class MovieGridFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private OnMovieCardClickListener cardListener;
     private MovieAdapter adapter;
+    private ArrayList<Movie> movies;
+    private String tag;
 
     public MovieGridFragment() {
         // Required empty public constructor
     }
 
-    public static MovieGridFragment newInstance() {
+    public static MovieGridFragment newInstance(String tag) {
         MovieGridFragment fragment = new MovieGridFragment();
         Bundle args = new Bundle();
+        Log.d(LOG_TAG, "newInstance: tag " + tag);
+        args.putString(ARG_TAG, tag);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,6 +60,15 @@ public class MovieGridFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            Log.d(LOG_TAG, "onCreate: Found movies list");
+            movies = savedInstanceState.getParcelableArrayList(KEY_MOVIES);
+            Log.d(LOG_TAG, "onCreate: Movies null " + (movies == null));
+        }
+        if (getArguments() != null) {
+            tag = getArguments().getString(ARG_TAG);
+            Log.d(LOG_TAG, "onCreate: Movies tag " + tag);
+        }
     }
 
     @Override
@@ -62,12 +77,28 @@ public class MovieGridFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_movie_grid, container, false);
         ButterKnife.inject(this, view);
+
+        if (savedInstanceState != null) {
+            Log.d(LOG_TAG, "onCreateView: Found movies list");
+            movies = savedInstanceState.getParcelableArrayList(KEY_MOVIES);
+            tag = savedInstanceState.getString(ARG_TAG);
+            Log.d(LOG_TAG, "onCreateView: Movies null " + (movies == null));
+            Log.d(LOG_TAG, "onCreateView: Movie tag " + tag);
+        }
+
+        Log.d(LOG_TAG, "onCreateView: Movies null " + (movies == null));
+        if (movies == null) {
+            Log.d(LOG_TAG, "onCreateView: Movie list is null. Creating new");
+            movies = new ArrayList<>();
+            populateMovies(1);
+        }
+
+        adapter = new MovieAdapter(getActivity(), movies, cardListener, tag);
+
         recyclerView.setHasFixedSize(true);
         // use a linear layout manager
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
-
-        adapter = new MovieAdapter(getActivity(), new ArrayList<Movie>(), cardListener);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
             @Override
@@ -75,7 +106,7 @@ public class MovieGridFragment extends Fragment {
                 populateMovies(currentPage);
             }
         });
-        populateMovies(1);
+
         return view;
     }
 
@@ -87,8 +118,8 @@ public class MovieGridFragment extends Fragment {
                 .build();
 
         MovieApiInterface movieApiCall = retrofit.create(MovieApiInterface.class);
-
-        movieApiCall.getPopularMovies(BuildConfig.TMDB_API_TOKEN, page).enqueue(
+        Log.d(LOG_TAG, "populateMovies:  Movie tag " + tag);
+        movieApiCall.getPopularMovies(tag, BuildConfig.TMDB_API_TOKEN, page).enqueue(
                 new Callback<MovieApiResponse>() {
                     @Override
                     public void onResponse(Call<MovieApiResponse> call, Response<MovieApiResponse> response) {
@@ -96,13 +127,11 @@ public class MovieGridFragment extends Fragment {
 
                         MovieApiResponse movieApiResponse = response.body();
 
-                        Log.e(LOG_TAG, "onResponse: page -" + String.valueOf(movieApiResponse.getPage()));
-                        Log.e(LOG_TAG, "onResponse: total_pages -" + String.valueOf(movieApiResponse.getTotal_pages()));
                         if (movieApiResponse.getResults() != null) {
-                            for (Movie movie : movieApiResponse.getResults()) {
-                                Log.e(LOG_TAG, "onResponse: movie title" + String.valueOf(movie.getTitle()));
-                            }
-                            adapter.addMovies(movieApiResponse.getResults());
+                            int endPosition = movies.size();
+                            int insertedItems = movies.size();
+                            movies.addAll(movieApiResponse.getResults());
+                            adapter.notifyItemRangeInserted(endPosition, insertedItems);
                         } else {
                             Log.e(LOG_TAG, "onResponse: results " + movieApiResponse.getResults());
                         }
@@ -114,6 +143,14 @@ public class MovieGridFragment extends Fragment {
                     }
                 }
         );
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(KEY_MOVIES, movies);
+        outState.putString(ARG_TAG, tag);
+        Log.d(LOG_TAG, "onSaveInstanceState: movies saved in bundle");
     }
 
     @Override
