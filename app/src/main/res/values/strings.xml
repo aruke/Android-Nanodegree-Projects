@@ -95,4 +95,6 @@
     </string>
     <string name="movie_tag_top_rated">Top Rated</string>
     <string name="movie_tag_popular">Popular</string>
+    <string name="action_view_on_github">View on GitHub</string>
+    <string name="project_github_link">https://github.com/rajanikantdeshmukh/UAND-P1</string>
 </resources>

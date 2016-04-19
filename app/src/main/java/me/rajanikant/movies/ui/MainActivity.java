@@ -1,6 +1,7 @@
 package me.rajanikant.movies.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -56,13 +57,16 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_view_on_github) {
+            Uri link = Uri.parse(getString(R.string.project_github_link));
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, link);
+            if (webIntent.resolveActivity(getPackageManager()) != null) {
+                startActivity(webIntent);
+            }else{
+                Toast.makeText(this, "No App found to resolve content", Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
 
