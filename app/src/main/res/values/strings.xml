@@ -97,4 +97,5 @@
     <string name="movie_tag_popular">Popular</string>
     <string name="action_view_on_github">View on GitHub</string>
     <string name="project_github_link">https://github.com/rajanikantdeshmukh/UAND-P1</string>
+    <string name="error_loading_movies">Error while loading Movies</string>
 </resources>
