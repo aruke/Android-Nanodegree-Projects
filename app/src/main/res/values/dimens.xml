@@ -7,7 +7,8 @@
     <dimen name="margin_movie_card">2dp</dimen>
     <dimen name="padding_gradient_overlay">8dp</dimen>
     <dimen name="margin_text_rating">4dp</dimen>
-    <dimen name="size_text_rating">16sp</dimen>
+    <dimen name="size_icon_rating">12dp</dimen>
+    <dimen name="size_text_rating">12dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>

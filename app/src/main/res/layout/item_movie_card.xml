@@ -2,10 +2,10 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/item_movie_card_root"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_movie_card_height"
+    android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_movie_card">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -13,34 +13,50 @@
         <ImageView
             android:id="@+id/item_movie_image_poster"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/item_movie_card_height"
             android:contentDescription="@string/movie_poster"
             android:scaleType="centerCrop" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/gradient_overlay"
-            android:gravity="bottom|start"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/padding_gradient_overlay">
 
-            <ImageView
-                android:id="@+id/item_movie_image_small_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/rating_icon" />
-
             <TextView
-                android:id="@+id/item_movie_image_small_text"
-                android:layout_width="wrap_content"
+                android:id="@+id/item_movie_title_text"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_text_rating"
-                android:layout_marginRight="@dimen/margin_text_rating"
-                android:textColor="#FFFFFFFF"
-                android:textSize="@dimen/size_text_rating" />
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:id="@+id/item_movie_image_small_icon"
+                    android:layout_width="@dimen/size_icon_rating"
+                    android:layout_height="@dimen/size_icon_rating"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/rating_icon" />
+
+                <TextView
+                    android:id="@+id/item_movie_image_small_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_text_rating"
+                    android:layout_marginRight="@dimen/margin_text_rating"
+                    android:textSize="@dimen/size_text_rating" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 </android.support.v7.widget.CardView>

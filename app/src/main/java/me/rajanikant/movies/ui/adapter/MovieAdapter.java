@@ -59,6 +59,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         final Movie movie = movies.get(position);
 
         holder.textRating.setText(String.valueOf(movie.getVoteAverage()));
+        holder.textTitle.setText(movie.getOriginalTitle());
         String posterUrl = "http://image.tmdb.org/t/p/w185" + movie.getPosterPath();
         Picasso.with(context).load(posterUrl).error(R.mipmap.ic_launcher).into(holder.imagePoster);
         if (movieTag.equals(Constants.MOVIE_TAG_POPULAR))
@@ -84,6 +85,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
 
         @InjectView(R.id.item_movie_card_root)
         CardView cardMovie;
+        @InjectView(R.id.item_movie_title_text)
+        TextView textTitle;
         @InjectView(R.id.item_movie_image_small_text)
         TextView textRating;
         @InjectView(R.id.item_movie_image_small_icon)
