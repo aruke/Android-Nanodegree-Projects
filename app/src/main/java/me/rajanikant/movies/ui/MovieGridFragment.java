@@ -10,12 +10,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.rajanikant.movies.BuildConfig;
+import me.rajanikant.movies.Utility;
 import me.rajanikant.movies.ui.listener.EndlessRecyclerOnScrollListener;
 import me.rajanikant.movies.api.model.Movie;
 import me.rajanikant.movies.ui.adapter.MovieAdapter;
@@ -118,37 +120,42 @@ public class MovieGridFragment extends Fragment {
 
     private void populateMovies(int page) {
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.themoviedb.org")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        if (Utility.isNetworkAvailable(getActivity())) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://api.themoviedb.org")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
-        MovieApiInterface movieApiCall = retrofit.create(MovieApiInterface.class);
-        Log.d(LOG_TAG, "populateMovies:  Movie tag " + tag);
-        movieApiCall.getPopularMovies(tag, BuildConfig.TMDB_API_TOKEN, page).enqueue(
-                new Callback<MovieApiResponse>() {
-                    @Override
-                    public void onResponse(Call<MovieApiResponse> call, Response<MovieApiResponse> response) {
-                        Log.e(LOG_TAG, "onResponse: code -" + String.valueOf(response.code()));
+            MovieApiInterface movieApiCall = retrofit.create(MovieApiInterface.class);
+            Log.d(LOG_TAG, "populateMovies:  Movie tag " + tag);
+            movieApiCall.getPopularMovies(tag, BuildConfig.TMDB_API_TOKEN, page).enqueue(
+                    new Callback<MovieApiResponse>() {
+                        @Override
+                        public void onResponse(Call<MovieApiResponse> call, Response<MovieApiResponse> response) {
+                            Log.e(LOG_TAG, "onResponse: code -" + String.valueOf(response.code()));
 
-                        MovieApiResponse movieApiResponse = response.body();
+                            MovieApiResponse movieApiResponse = response.body();
 
-                        if (movieApiResponse.getResults() != null) {
-                            int endPosition = movies.size();
-                            int insertedItems = movies.size();
-                            movies.addAll(movieApiResponse.getResults());
-                            adapter.notifyItemRangeInserted(endPosition, insertedItems);
-                        } else {
-                            Log.e(LOG_TAG, "onResponse: results " + movieApiResponse.getResults());
+                            if (movieApiResponse.getResults() != null) {
+                                int endPosition = movies.size();
+                                int insertedItems = movies.size();
+                                movies.addAll(movieApiResponse.getResults());
+                                adapter.notifyItemRangeInserted(endPosition, insertedItems);
+                            } else {
+                                Log.e(LOG_TAG, "onResponse: results " + movieApiResponse.getResults());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<MovieApiResponse> call, Throwable t) {
+                            Log.e(LOG_TAG, "onFailure:" + t.getLocalizedMessage(), t);
                         }
                     }
-
-                    @Override
-                    public void onFailure(Call<MovieApiResponse> call, Throwable t) {
-                        Log.e(LOG_TAG, "onFailure:" + t.getLocalizedMessage(), t);
-                    }
-                }
-        );
+            );
+        } else {
+            Log.e(LOG_TAG, "populateMovies: No network available");
+            Toast.makeText(getActivity(), "No Network Available", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
