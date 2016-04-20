@@ -46,6 +46,8 @@ public class MovieGridFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private OnMovieCardClickListener cardListener;
+    private Call<MovieApiResponse> popularMoviesCall;
+    private MovieApiInterface movieApiCall;
     private MovieAdapter adapter;
     private ArrayList<Movie> movies;
     private String tag;
@@ -90,7 +92,7 @@ public class MovieGridFragment extends Fragment {
             tag = savedInstanceState.getString(ARG_TAG);
             Log.d(LOG_TAG, "onCreateView: Movies null " + (movies == null));
             Log.d(LOG_TAG, "onCreateView: Movie tag " + tag);
-            if (movies.size()==0){
+            if (movies.size() == 0) {
                 emptyView.setVisibility(View.VISIBLE);
             }
         }
@@ -127,17 +129,20 @@ public class MovieGridFragment extends Fragment {
     private void populateMovies(final int page) {
 
         if (Utility.isNetworkAvailable(getActivity())) {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://api.themoviedb.org")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
 
-            MovieApiInterface movieApiCall = retrofit.create(MovieApiInterface.class);
-            Log.d(LOG_TAG, "populateMovies:  Movie tag " + tag);
+            if (movieApiCall == null) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://api.themoviedb.org")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
-            emptyView.setVisibility(View.GONE);
+                movieApiCall = retrofit.create(MovieApiInterface.class);
+            }
 
-            movieApiCall.getPopularMovies(tag, BuildConfig.TMDB_API_TOKEN, page).enqueue(
+            toggleEmptyView(false);
+
+            popularMoviesCall = movieApiCall.getPopularMovies(tag, BuildConfig.TMDB_API_TOKEN, page);
+            popularMoviesCall.enqueue(
                     new Callback<MovieApiResponse>() {
                         @Override
                         public void onResponse(Call<MovieApiResponse> call, Response<MovieApiResponse> response) {
@@ -152,8 +157,8 @@ public class MovieGridFragment extends Fragment {
                                 adapter.notifyItemRangeInserted(endPosition, insertedItems);
                             } else {
                                 Log.e(LOG_TAG, "onResponse: results " + movieApiResponse.getResults());
-                                if (page==1&&movies.size()==0) {
-                                    emptyView.setVisibility(View.VISIBLE);
+                                if (page == 1 && movies.size() == 0) {
+                                    toggleEmptyView(true);
                                     Toast.makeText(getActivity(), "No Network Available", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -162,8 +167,8 @@ public class MovieGridFragment extends Fragment {
                         @Override
                         public void onFailure(Call<MovieApiResponse> call, Throwable t) {
                             Log.e(LOG_TAG, "onFailure:" + t.getLocalizedMessage(), t);
-                            if (page==1&&movies.size()==0) {
-                                emptyView.setVisibility(View.VISIBLE);
+                            if (page == 1 && movies.size() == 0) {
+                                toggleEmptyView(true);
                                 Toast.makeText(getActivity(), "No Network Available", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -171,11 +176,16 @@ public class MovieGridFragment extends Fragment {
             );
         } else {
             Log.e(LOG_TAG, "populateMovies: No network available");
-            if (page==1&&movies.size()==0) {
-                emptyView.setVisibility(View.VISIBLE);
+            if (page == 1 && movies.size() == 0) {
+                toggleEmptyView(true);
                 Toast.makeText(getActivity(), "No Network Available", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void toggleEmptyView(boolean makeVisible) {
+        if (emptyView != null)
+            emptyView.setVisibility((makeVisible ? View.VISIBLE : View.GONE));
     }
 
     @Override
@@ -214,5 +224,7 @@ public class MovieGridFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
+        if (popularMoviesCall != null && !popularMoviesCall.isCanceled())
+            popularMoviesCall.cancel();
     }
 }
