@@ -1,6 +1,7 @@
 package me.rajanikant.movies.ui;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -95,9 +96,14 @@ public class MovieGridFragment extends Fragment {
 
         adapter = new MovieAdapter(getActivity(), movies, cardListener, tag);
 
+        // Check for orientation
+        int rows = 2;
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+            rows = 3;
+
         recyclerView.setHasFixedSize(true);
         // use a linear layout manager
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), rows);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new EndlessRecyclerOnScrollListener(layoutManager) {
