@@ -96,6 +96,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             fragmentTitleList.add(getString(R.string.movie_tag_top_rated));
             fragmentList.add(MovieGridFragment.newInstance(Constants.MOVIE_TAG_POPULAR));
             fragmentTitleList.add(getString(R.string.movie_tag_popular));
+            fragmentList.add(FavMovieGridFragment.newInstance());
+            fragmentTitleList.add(getString(R.string.movie_tag_favourite));
         }
 
         @Override
