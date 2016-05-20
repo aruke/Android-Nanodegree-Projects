@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="me.rajanikant.movies">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,6 +25,11 @@
             android:name=".ui.MovieDetailsActivity"
             android:label="@string/title_activity_movie_details"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <provider
+            android:name=".db.MoviesProvider"
+            android:authorities="me.rajanikant.movies"
+            android:exported="false"/>
     </application>
 
 </manifest>

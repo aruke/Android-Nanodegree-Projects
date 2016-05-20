@@ -5,47 +5,68 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import ckm.simple.sql_provider.annotation.SimpleSQLColumn;
+import ckm.simple.sql_provider.annotation.SimpleSQLTable;
+import me.rajanikant.movies.Constants;
+
 /**
  * Project : Popular Movies
  * Author : Rajanikant
  * Date : 28 Mar 2016
  * Time : 00:26
  */
+
+@SimpleSQLTable(
+        table = "movies",
+        provider = Constants.CONTENT_PROVIDER_NAME
+)
 public class Movie implements Parcelable {
 
+    @SimpleSQLColumn(value = "id", primary = true)
     @SerializedName("id")
     int id;
 
+    @SimpleSQLColumn("original_language")
     @SerializedName("original_language")
     String originalLanguage;
 
+    @SimpleSQLColumn("original_title")
     @SerializedName("original_title")
     String originalTitle;
 
+    @SimpleSQLColumn("overview")
     @SerializedName("overview")
     String overview;
 
+    @SimpleSQLColumn("release_date")
     @SerializedName("release_date")
     String releaseDate;
 
+    @SimpleSQLColumn("poster_path")
     @SerializedName("poster_path")
     String posterPath;
 
+    @SimpleSQLColumn("backdrop_path")
     @SerializedName("backdrop_path")
     String backdropPath;
 
+    @SimpleSQLColumn("popularity")
     @SerializedName("popularity")
     double popularity;
 
+    @SimpleSQLColumn("title")
     @SerializedName("title")
     String title;
 
+    @SimpleSQLColumn("video")
     @SerializedName("video")
     boolean video;
 
+    @SimpleSQLColumn("vote_average")
     @SerializedName("vote_average")
     double voteAverage;
 
+    @SimpleSQLColumn("vote_count")
     @SerializedName("vote_count")
     int voteCount;
 
@@ -164,7 +185,7 @@ public class Movie implements Parcelable {
         this.title = title;
     }
 
-    public boolean isVideo() {
+    public boolean getVideo() {
         return video;
     }
 

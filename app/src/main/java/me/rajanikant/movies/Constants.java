@@ -17,4 +17,7 @@ public class Constants {
 
     public static final String MOVIE_TAG_POPULAR = "popular";
     public static final String MOVIE_TAG_TOP_RATED = "top_rated";
+
+    public static final String CONTENT_PROVIDER_NAME = "MoviesProvider";
+    public static final String DATABASE_NAME = "movies.db";
 }
