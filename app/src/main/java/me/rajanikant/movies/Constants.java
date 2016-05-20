@@ -8,6 +8,7 @@ package me.rajanikant.movies;
  */
 public class Constants {
 
+    public static final String INTENT_EXTRA_MOVIE_ID = "movie-id";
     public static final String INTENT_EXTRA_MOVIE_TITLE = "movie-title";
     public static final String INTENT_EXTRA_MOVIE_OVERVIEW = "movie-overview";
     public static final String INTENT_EXTRA_MOVIE_RELEASE_DATE = "movie-release-date";
