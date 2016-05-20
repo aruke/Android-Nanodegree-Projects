@@ -159,7 +159,6 @@ public class MovieGridFragment extends Fragment {
                                 Log.e(LOG_TAG, "onResponse: results " + movieApiResponse.getResults());
                                 if (page == 1 && movies.size() == 0) {
                                     toggleEmptyView(true);
-                                    Toast.makeText(getActivity(), "No Network Available", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
@@ -169,7 +168,6 @@ public class MovieGridFragment extends Fragment {
                             Log.e(LOG_TAG, "onFailure:" + t.getLocalizedMessage(), t);
                             if (page == 1 && movies.size() == 0) {
                                 toggleEmptyView(true);
-                                Toast.makeText(getActivity(), "No Network Available", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -178,7 +176,6 @@ public class MovieGridFragment extends Fragment {
             Log.e(LOG_TAG, "populateMovies: No network available");
             if (page == 1 && movies.size() == 0) {
                 toggleEmptyView(true);
-                Toast.makeText(getActivity(), "No Network Available", Toast.LENGTH_SHORT).show();
             }
         }
     }
