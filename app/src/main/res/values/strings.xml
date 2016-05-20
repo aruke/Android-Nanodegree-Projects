@@ -11,4 +11,5 @@
     <string name="error_loading_movies">Error while loading Movies</string>
     <string name="error_no_fav_movies">You haven\'t liked any movies yet</string>
     <string name="movie_tag_favourite">Favourites</string>
+    <string name="nwtwork_error">No Network Available</string>
 </resources>

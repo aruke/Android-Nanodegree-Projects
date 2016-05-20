@@ -3,6 +3,7 @@ package me.rajanikant.movies.ui;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,6 +22,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.rajanikant.movies.Constants;
+import me.rajanikant.movies.Utility;
 import me.rajanikant.movies.api.model.Movie;
 import me.rajanikant.movies.ui.listener.OnFragmentInteractionListener;
 import me.rajanikant.movies.R;
@@ -46,6 +48,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+
+        if (!Utility.isNetworkAvailable(this)){
+
+            // If network is not available switched to save movies
+            viewPager.setCurrentItem(2, true);
+
+            Snackbar.make(viewPager, R.string.nwtwork_error, Snackbar.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
