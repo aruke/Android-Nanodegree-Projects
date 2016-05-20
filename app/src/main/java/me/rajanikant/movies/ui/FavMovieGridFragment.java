@@ -2,8 +2,12 @@ package me.rajanikant.movies.ui;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,12 +19,14 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.rajanikant.movies.R;
 import me.rajanikant.movies.api.model.Movie;
+import me.rajanikant.movies.api.model.MoviesTable;
+import me.rajanikant.movies.ui.adapter.FavMovieAdapter;
 import me.rajanikant.movies.ui.listener.OnFragmentInteractionListener;
 import me.rajanikant.movies.ui.listener.OnMovieCardClickListener;
 
-public class FavMovieGridFragment extends Fragment {
+public class FavMovieGridFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
 
-    private static final String LOG_TAG = "FavMovieGridFragment";
+    private static final int LOADER_ID = 123;
 
     @InjectView(R.id.fragment_fav_movie_grid_recycler_view)
     RecyclerView recyclerView;
@@ -29,6 +35,7 @@ public class FavMovieGridFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private OnMovieCardClickListener cardListener;
+    private FavMovieAdapter favMovieAdapter;
 
     public FavMovieGridFragment() {
         // Required empty public constructor
@@ -60,21 +67,45 @@ public class FavMovieGridFragment extends Fragment {
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), rows);
         recyclerView.setLayoutManager(layoutManager);
 
-        populateMovies();
+        favMovieAdapter = new FavMovieAdapter(getActivity(), null, cardListener);
+        recyclerView.setAdapter(favMovieAdapter);
 
         return view;
-    }
-
-    private void populateMovies() {
-
-        // TODO Populate movies from local database
-        toggleEmptyView(true);
-
     }
 
     private void toggleEmptyView(boolean makeVisible) {
         if (emptyView != null)
             emptyView.setVisibility((makeVisible ? View.VISIBLE : View.GONE));
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        getLoaderManager().initLoader(LOADER_ID, null, this);
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(getActivity(),
+                MoviesTable.CONTENT_URI,
+                null,
+                null,
+                null,
+                null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        favMovieAdapter.swapCursor(data);
+        if (data!=null && data.getCount()!=0)
+            toggleEmptyView(false);
+        else
+            toggleEmptyView(true);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        favMovieAdapter.swapCursor(null);
     }
 
     @Override
