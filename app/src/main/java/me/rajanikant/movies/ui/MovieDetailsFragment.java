@@ -19,16 +19,32 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import me.rajanikant.movies.BuildConfig;
 import me.rajanikant.movies.Constants;
 import me.rajanikant.movies.R;
+import me.rajanikant.movies.Utility;
+import me.rajanikant.movies.api.MovieApiInterface;
+import me.rajanikant.movies.api.ReviewsResponse;
+import me.rajanikant.movies.api.VideosResponse;
 import me.rajanikant.movies.api.model.Movie;
 import me.rajanikant.movies.api.model.MoviesTable;
+import me.rajanikant.movies.api.model.Review;
+import me.rajanikant.movies.api.model.Video;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class MovieDetailsFragment extends Fragment {
+
+    private static final String TAG = "MovieDetailsFragment";
 
     @InjectView(R.id.fragment_movie_details_toolbar)
     Toolbar toolbar;
@@ -119,6 +135,9 @@ public class MovieDetailsFragment extends Fragment {
 
         toggleLikeButton(movieLiked);
 
+        populateTrailers(id);
+        populateReviews(id);
+
         return view;
     }
 
@@ -142,7 +161,7 @@ public class MovieDetailsFragment extends Fragment {
                 toggleLikeButton(true);
             else
                 Snackbar.make(view, "Something went wrong", Snackbar.LENGTH_SHORT).show();
-        } else{
+        } else {
             int deletedRows = getActivity().getContentResolver().delete(
                     MoviesTable.CONTENT_URI,
                     MoviesTable.FIELD_ID + "=?",
@@ -156,12 +175,88 @@ public class MovieDetailsFragment extends Fragment {
         }
     }
 
-    private void toggleLikeButton(boolean liked){
+    private void toggleLikeButton(boolean liked) {
         movieLiked = liked;
-        if (movieLiked){
+        if (movieLiked) {
             buttonLike.setImageResource(R.drawable.ic_favorite);
-        }else{
+        } else {
             buttonLike.setImageResource(R.drawable.ic_favorite_border);
+        }
+    }
+
+    private void populateTrailers(final int movieId) {
+
+        if (Utility.isNetworkAvailable(getActivity())) {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://api.themoviedb.org")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            MovieApiInterface movieApiCall = retrofit.create(MovieApiInterface.class);
+
+            Call<VideosResponse> getVideosCall = movieApiCall.getMovieVideos(id, BuildConfig.TMDB_API_TOKEN, 1);
+            getVideosCall.enqueue(
+                    new Callback<VideosResponse>() {
+                        @Override
+                        public void onResponse(Call<VideosResponse> call, Response<VideosResponse> response) {
+                            Log.e(TAG, "onResponse: code -" + String.valueOf(response.code()));
+
+                            VideosResponse videosResponse = response.body();
+                            Log.d(TAG, "onResponse: videoResponse " + videosResponse.getId());
+
+                            List<Video> results = videosResponse.getResults();
+                            for (Video result : results) {
+                                Log.d(TAG, "onResponse: result " + result.toString());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<VideosResponse> call, Throwable t) {
+                            Log.e(TAG, "onFailure:" + t.getLocalizedMessage(), t);
+                        }
+                    }
+            );
+        } else {
+            Log.e(TAG, "populateMovies: No network available");
+        }
+    }
+
+    private void populateReviews(final int movieId) {
+
+        if (Utility.isNetworkAvailable(getActivity())) {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("http://api.themoviedb.org")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+
+            MovieApiInterface movieApiCall = retrofit.create(MovieApiInterface.class);
+
+            Call<ReviewsResponse> getReviewsCall = movieApiCall.getMovieReviews(id, BuildConfig.TMDB_API_TOKEN, 1);
+            getReviewsCall.enqueue(
+                    new Callback<ReviewsResponse>() {
+                        @Override
+                        public void onResponse(Call<ReviewsResponse> call, Response<ReviewsResponse> response) {
+                            Log.e(TAG, "onResponse: code -" + String.valueOf(response.code()));
+
+                            ReviewsResponse reviewsResponse = response.body();
+                            Log.d(TAG, "onResponse: reviewResponse " + reviewsResponse.getId());
+
+                            List<Review> results = reviewsResponse.getResults();
+                            for (Review result : results) {
+                                Log.d(TAG, "onResponse: result " + result.toString());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ReviewsResponse> call, Throwable t) {
+                            Log.e(TAG, "onFailure:" + t.getLocalizedMessage(), t);
+                        }
+                    }
+            );
+        } else {
+            Log.e(TAG, "populateMovies: No network available");
         }
     }
 

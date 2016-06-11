@@ -18,4 +18,12 @@ public interface MovieApiInterface {
     @GET("/3/movie/{tag}")
     Call<MovieApiResponse> getPopularMovies(@Path("tag") String tag, @Query("api_key") String apiKey, @Query("page") int page);
 
+    @Headers({"Accept: application/json"})
+    @GET("/3/movie/{id}/videos")
+    Call<VideosResponse> getMovieVideos(@Path("id") int id, @Query("api_key") String apiKey, @Query("page") int page);
+
+    @Headers({"Accept: application/json"})
+    @GET("/3/movie/{id}/reviews")
+    Call<ReviewsResponse> getMovieReviews(@Path("id") int id, @Query("api_key") String apiKey, @Query("page") int page);
+
 }
