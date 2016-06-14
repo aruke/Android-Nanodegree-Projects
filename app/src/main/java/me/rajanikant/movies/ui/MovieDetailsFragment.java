@@ -9,12 +9,16 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -35,6 +39,8 @@ import me.rajanikant.movies.api.model.Movie;
 import me.rajanikant.movies.api.model.MoviesTable;
 import me.rajanikant.movies.api.model.Review;
 import me.rajanikant.movies.api.model.Video;
+import me.rajanikant.movies.ui.adapter.ReviewItemAdapter;
+import me.rajanikant.movies.ui.adapter.VideoItemAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,6 +62,14 @@ public class MovieDetailsFragment extends Fragment {
     ImageView imageBackdrop;
     @InjectView(R.id.content_movie_details_text_overview)
     TextView textOverview;
+    @InjectView(R.id.content_movie_details_video_list)
+    ListView videoList;
+    @InjectView(R.id.content_movie_details_video_empty_text)
+    TextView videoEmptyText;
+    @InjectView(R.id.content_movie_details_review_list)
+    ListView reviewList;
+    @InjectView(R.id.content_movie_details_review_empty_text)
+    TextView reviewEmptyText;
 
     private int id;
     private String title;
@@ -137,6 +151,10 @@ public class MovieDetailsFragment extends Fragment {
 
         toggleLikeButton(movieLiked);
 
+        // Setup list views
+        videoList.setEmptyView(videoEmptyText);
+        reviewList.setEmptyView(reviewEmptyText);
+
         populateTrailers(id);
         populateReviews(id);
 
@@ -208,9 +226,11 @@ public class MovieDetailsFragment extends Fragment {
                             Log.d(TAG, "onResponse: videoResponse " + videosResponse.getId());
 
                             List<Video> results = videosResponse.getResults();
-                            for (Video result : results) {
-                                Log.d(TAG, "onResponse: result " + result.toString());
-                            }
+
+                            VideoItemAdapter adapter = new VideoItemAdapter(getActivity(), results);
+                            videoList.setAdapter(adapter);
+
+                            Utility.setListViewHeightBasedOnChildren(videoList);
                         }
 
                         @Override
@@ -246,9 +266,10 @@ public class MovieDetailsFragment extends Fragment {
                             Log.d(TAG, "onResponse: reviewResponse " + reviewsResponse.getId());
 
                             List<Review> results = reviewsResponse.getResults();
-                            for (Review result : results) {
-                                Log.d(TAG, "onResponse: result " + result.toString());
-                            }
+                            ReviewItemAdapter adapter = new ReviewItemAdapter(getActivity(), results);
+                            reviewList.setAdapter(adapter);
+
+                            Utility.setListViewHeightBasedOnChildren(reviewList);
                         }
 
                         @Override

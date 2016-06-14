@@ -14,7 +14,10 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="backdrop_height">240dp</dimen>
     <dimen name="detail_card_text_size">16sp</dimen>
+    <dimen name="detail_card_text_size_small">14sp</dimen>
     <dimen name="empty_view_text_size">16sp</dimen>
     <dimen name="detail_card_margin">16dp</dimen>
     <dimen name="detail_card_padding">16dp</dimen>
+    <dimen name="video_thumbnail_width">120dp</dimen>
+    <dimen name="video_thumbnail_height">80dp</dimen>
 </resources>
