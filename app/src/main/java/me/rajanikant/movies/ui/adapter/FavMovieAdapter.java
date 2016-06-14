@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,14 +48,12 @@ public class FavMovieAdapter extends CursorRecyclerViewAdapter<FavMovieAdapter.M
 
         final Movie movie = MoviesTable.getRow(cursor, false);
 
-        holder.textRating.setText(String.valueOf(movie.getVoteAverage()));
-        holder.textTitle.setText(movie.getOriginalTitle());
+        holder.textTitle.setText(movie.getTitle());
         String posterUrl = "http://image.tmdb.org/t/p/w185" + movie.getPosterPath();
         Picasso.with(context).load(posterUrl).error(R.drawable.gradient_overlay).into(holder.imagePoster);
-//        if (movieTag.equals(Constants.MOVIE_TAG_POPULAR))
-//            holder.imageRating.setImageResource(R.drawable.ic_popularity);
-//        else
-//            holder.imageRating.setImageResource(R.drawable.ic_rating);
+
+        holder.imageRating.setVisibility(View.GONE);
+        holder.textRating.setVisibility(View.GONE);
 
         holder.cardMovie.setOnClickListener(new View.OnClickListener() {
             @Override
