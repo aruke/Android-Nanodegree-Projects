@@ -19,6 +19,7 @@
         android:drawableTop="@drawable/ic_cloud_off"
         android:drawablePadding="16dp"
         android:text="@string/error_loading_movies"
+        android:textSize="@dimen/empty_view_text_size"
         android:layout_centerInParent="true"/>
 
 </RelativeLayout>
