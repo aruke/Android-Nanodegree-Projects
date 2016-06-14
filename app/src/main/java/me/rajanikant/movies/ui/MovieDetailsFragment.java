@@ -116,7 +116,9 @@ public class MovieDetailsFragment extends Fragment {
         parentActivity.setSupportActionBar(toolbar);
         ActionBar actionBar = parentActivity.getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(!Utility.isTwoPaned());
+            if (Utility.isTwoPaned())
+                actionBar.setElevation(0);
         }
 
         // Check for like of user and reflect on UI

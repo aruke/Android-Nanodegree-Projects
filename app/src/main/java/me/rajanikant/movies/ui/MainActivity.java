@@ -12,6 +12,7 @@ import butterknife.InjectView;
 import butterknife.Optional;
 import me.rajanikant.movies.Constants;
 import me.rajanikant.movies.R;
+import me.rajanikant.movies.Utility;
 import me.rajanikant.movies.api.model.Movie;
 import me.rajanikant.movies.ui.listener.OnFragmentInteractionListener;
 
@@ -22,8 +23,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
     @Optional
     @InjectView(R.id.activity_main_container_layout)
     FrameLayout detailsFragmentContainer;
-
-    private boolean twoPanedLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +37,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         Log.w(TAG, "onCreate: height in DPI " + dpHeight);
         Log.w(TAG, "onCreate: width in DPI " + dpWidth);
 
-        if (detailsFragmentContainer!=null) {
-            Log.d(TAG, "onCreate: switched to 2 paned layout");
-            twoPanedLayout = true;
-        }
-        else {
-            Log.d(TAG, "onCreate: Still in single pane");
-            twoPanedLayout = false;
-        }
+        Utility.setTwoPaneLayout(detailsFragmentContainer!=null);
+
+        if (Utility.isTwoPaned() && getSupportActionBar()!=null)
+            getSupportActionBar().setElevation(0);
+
     }
 
     @Override
@@ -60,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         String posterPath = movie.getPosterPath();
         String backdropPath = movie.getBackdropPath();
 
-        if (twoPanedLayout){
+        if (Utility.isTwoPaned()){
 
             MovieDetailsFragment fragment = MovieDetailsFragment.newInstance(id, title, overview, releaseDate, ratings, backdropPath, posterPath);
 

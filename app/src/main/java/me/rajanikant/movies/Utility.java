@@ -12,11 +12,21 @@ import android.net.NetworkInfo;
  */
 public class Utility {
 
+    private static boolean mTwoPaneLayout = false;
+
     public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public static boolean isTwoPaned(){
+        return mTwoPaneLayout;
+    }
+
+    public static void setTwoPaneLayout(boolean twoPaneLayout){
+        mTwoPaneLayout = twoPaneLayout;
     }
 
 }
