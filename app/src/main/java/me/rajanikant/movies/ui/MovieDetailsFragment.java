@@ -70,6 +70,10 @@ public class MovieDetailsFragment extends Fragment {
     ListView reviewList;
     @InjectView(R.id.content_movie_details_review_empty_text)
     TextView reviewEmptyText;
+    @InjectView(R.id.content_movie_details_text_ratings)
+    TextView textRatings;
+    @InjectView(R.id.content_movie_details_text_release_date)
+    TextView textReleaseDate;
 
     private int id;
     private String title;
@@ -122,6 +126,8 @@ public class MovieDetailsFragment extends Fragment {
         String backdropUrl = "http://image.tmdb.org/t/p/w780" + backdropPath;
         Picasso.with(getActivity()).load(backdropUrl).into(imageBackdrop);
         textOverview.setText(overview);
+        textReleaseDate.setText(releaseDate);
+        textRatings.setText(String.valueOf(ratings));
 
         toolbar.setTitle(title);
 
@@ -163,8 +169,8 @@ public class MovieDetailsFragment extends Fragment {
             }
         });
 
-        populateTrailers(id);
-        populateReviews(id);
+        populateTrailers();
+        populateReviews();
 
         return view;
     }
@@ -191,7 +197,8 @@ public class MovieDetailsFragment extends Fragment {
             movie.setOverview(overview);
             movie.setPosterPath(posterPath);
             movie.setBackdropPath(backdropPath);
-            movie.setPosterPath(posterPath);
+            movie.setReleaseDate(releaseDate);
+            movie.setVoteAverage(ratings);
 
             Uri returnUri = getActivity().getContentResolver().insert(MoviesTable.CONTENT_URI, MoviesTable.getContentValues(movie, true));
 
@@ -224,7 +231,7 @@ public class MovieDetailsFragment extends Fragment {
         }
     }
 
-    private void populateTrailers(final int movieId) {
+    private void populateTrailers() {
 
         if (Utility.isNetworkAvailable(getActivity())) {
 
@@ -264,7 +271,7 @@ public class MovieDetailsFragment extends Fragment {
         }
     }
 
-    private void populateReviews(final int movieId) {
+    private void populateReviews() {
 
         if (Utility.isNetworkAvailable(getActivity())) {
 

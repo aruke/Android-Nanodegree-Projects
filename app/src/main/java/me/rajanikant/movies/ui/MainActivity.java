@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
             detailIntent.putExtra(Constants.INTENT_EXTRA_MOVIE_TITLE, title);
             detailIntent.putExtra(Constants.INTENT_EXTRA_MOVIE_OVERVIEW, overview);
             detailIntent.putExtra(Constants.INTENT_EXTRA_MOVIE_RATINGS, ratings);
-            detailIntent.putExtra(Constants.INTENT_EXTRA_MOVIE_RELEASE_DATE, ratings);
+            detailIntent.putExtra(Constants.INTENT_EXTRA_MOVIE_RELEASE_DATE, releaseDate);
             detailIntent.putExtra(Constants.INTENT_EXTRA_MOVIE_POSTER_PATH, posterPath);
             detailIntent.putExtra(Constants.INTENT_EXTRA_MOVIE_BACKDROP_PATH, backdropPath);
             startActivity(detailIntent);
