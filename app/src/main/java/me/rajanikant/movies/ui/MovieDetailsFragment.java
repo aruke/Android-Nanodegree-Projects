@@ -1,6 +1,8 @@
 package me.rajanikant.movies.ui;
 
+import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,16 +11,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -155,10 +155,30 @@ public class MovieDetailsFragment extends Fragment {
         videoList.setEmptyView(videoEmptyText);
         reviewList.setEmptyView(reviewEmptyText);
 
+        videoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Video video = (Video) parent.getAdapter().getItem(position);
+                watchYoutubeVideo(video.getKey());
+            }
+        });
+
         populateTrailers(id);
         populateReviews(id);
 
         return view;
+    }
+
+    private void watchYoutubeVideo(String id) {
+        Log.d(TAG, "watchYoutubeVideo: id " + id);
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id));
+            startActivity(intent);
+        } catch (ActivityNotFoundException ex) {
+            Intent intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://www.youtube.com/watch?v=" + id));
+            startActivity(intent);
+        }
     }
 
     @OnClick(R.id.fragment_movie_details_button_like)
