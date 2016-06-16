@@ -132,13 +132,13 @@ public class MovieDetailsFragment extends Fragment {
         toolbar.setTitle(title);
 
         // Set as actionbar to activity and set up button for navigation
-        AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
-        parentActivity.setSupportActionBar(toolbar);
-        ActionBar actionBar = parentActivity.getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(!Utility.isTwoPaned());
-            if (Utility.isTwoPaned())
-                actionBar.setElevation(0);
+        if (!Utility.isTwoPaned()){
+            AppCompatActivity parentActivity = (AppCompatActivity) getActivity();
+            parentActivity.setSupportActionBar(toolbar);
+            ActionBar actionBar = parentActivity.getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(!Utility.isTwoPaned());
+            }
         }
 
         // Check for like of user and reflect on UI
