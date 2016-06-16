@@ -235,6 +235,8 @@ public class MovieDetailsFragment extends Fragment {
 
         if (Utility.isNetworkAvailable(getActivity())) {
 
+            videoEmptyText.setText("Loading videos...");
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("http://api.themoviedb.org")
                     .addConverterFactory(GsonConverterFactory.create())
@@ -253,6 +255,11 @@ public class MovieDetailsFragment extends Fragment {
                             Log.d(TAG, "onResponse: videoResponse " + videosResponse.getId());
 
                             List<Video> results = videosResponse.getResults();
+
+                            if (results.size() == 0 && videoEmptyText!=null) {
+                                videoEmptyText.setText("No videos Available");
+                                return;
+                            }
 
                             VideoItemAdapter adapter = new VideoItemAdapter(getActivity(), results);
                             videoList.setAdapter(adapter);
@@ -275,6 +282,8 @@ public class MovieDetailsFragment extends Fragment {
 
         if (Utility.isNetworkAvailable(getActivity())) {
 
+            reviewEmptyText.setText("Loading reviews...");
+
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl("http://api.themoviedb.org")
                     .addConverterFactory(GsonConverterFactory.create())
@@ -293,6 +302,12 @@ public class MovieDetailsFragment extends Fragment {
                             Log.d(TAG, "onResponse: reviewResponse " + reviewsResponse.getId());
 
                             List<Review> results = reviewsResponse.getResults();
+
+                            if (results.size() == 0 && reviewEmptyText!=null) {
+                                reviewEmptyText.setText("No reviews Available");
+                                return;
+                            }
+
                             ReviewItemAdapter adapter = new ReviewItemAdapter(getActivity(), results);
                             reviewList.setAdapter(adapter);
 
