@@ -39,8 +39,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         Utility.setTwoPaneLayout(detailsFragmentContainer!=null);
 
-        if (Utility.isTwoPaned() && getSupportActionBar()!=null)
+        if (Utility.isTwoPaned() && getSupportActionBar()!=null) {
             getSupportActionBar().setElevation(0);
+            MovieDetailPlaceholderFragment fragment = MovieDetailPlaceholderFragment.newInstance();
+
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.activity_main_container_layout, fragment)
+                    .commit();
+        }
 
     }
 
