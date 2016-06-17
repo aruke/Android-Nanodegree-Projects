@@ -43,7 +43,7 @@
                     android:layout_width="@dimen/size_icon_rating"
                     android:layout_height="@dimen/size_icon_rating"
                     android:layout_gravity="center_vertical"
-                    android:contentDescription="@string/rating_icon" />
+                    android:contentDescription="@string/rating_icon_content_description" />
 
                 <TextView
                     android:id="@+id/item_movie_image_small_text"

@@ -51,6 +51,7 @@ public class FavMovieAdapter extends CursorRecyclerViewAdapter<FavMovieAdapter.M
         holder.textTitle.setText(movie.getTitle());
         String posterUrl = "http://image.tmdb.org/t/p/w185" + movie.getPosterPath();
         Picasso.with(context).load(posterUrl).error(R.drawable.gradient_overlay).into(holder.imagePoster);
+        holder.imagePoster.setContentDescription(movie.getTitle());
 
         holder.imageRating.setVisibility(View.GONE);
         holder.textRating.setVisibility(View.GONE);

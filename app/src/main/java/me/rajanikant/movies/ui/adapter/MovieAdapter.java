@@ -62,6 +62,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         holder.textTitle.setText(movie.getOriginalTitle());
         String posterUrl = "http://image.tmdb.org/t/p/w185" + movie.getPosterPath();
         Picasso.with(context).load(posterUrl).error(R.drawable.gradient_overlay).into(holder.imagePoster);
+        holder.imagePoster.setContentDescription(movie.getOriginalTitle());
         if (movieTag.equals(Constants.MOVIE_TAG_POPULAR))
             holder.imageRating.setImageResource(R.drawable.ic_popularity);
         else
