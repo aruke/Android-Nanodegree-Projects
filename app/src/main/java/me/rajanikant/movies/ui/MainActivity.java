@@ -1,11 +1,15 @@
 package me.rajanikant.movies.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.FrameLayout;
+
+import java.util.Locale;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -20,9 +24,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     private static final String TAG = "MainActivity";
 
+    private static final String ERROR_DIALOG_KEY = "error_shown";
+    private static final String RESPONSE_CODE_KEY = "response_code";
     @Optional
     @InjectView(R.id.activity_main_container_layout)
     FrameLayout detailsFragmentContainer;
+
+    private AlertDialog dialog;
+    private boolean isErrorDialogShown;
+    private int code;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +47,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         Log.w(TAG, "onCreate: height in DPI " + dpHeight);
         Log.w(TAG, "onCreate: width in DPI " + dpWidth);
 
-        Utility.setTwoPaneLayout(detailsFragmentContainer!=null);
+        Utility.setTwoPaneLayout(detailsFragmentContainer != null);
 
-        if (Utility.isTwoPaned() && getSupportActionBar()!=null) {
+        if (Utility.isTwoPaned() && getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
             MovieDetailPlaceholderFragment fragment = MovieDetailPlaceholderFragment.newInstance();
 
@@ -47,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                     .beginTransaction()
                     .replace(R.id.activity_main_container_layout, fragment)
                     .commit();
+        }
+
+        if (savedInstanceState != null && savedInstanceState.getBoolean(ERROR_DIALOG_KEY)) {
+            showServerErrorDialog(savedInstanceState.getInt(RESPONSE_CODE_KEY));
         }
 
     }
@@ -63,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         String posterPath = movie.getPosterPath();
         String backdropPath = movie.getBackdropPath();
 
-        if (Utility.isTwoPaned()){
+        if (Utility.isTwoPaned()) {
 
             MovieDetailsFragment fragment = MovieDetailsFragment.newInstance(id, title, overview, releaseDate, ratings, backdropPath, posterPath);
 
@@ -86,5 +100,45 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(ERROR_DIALOG_KEY, isErrorDialogShown);
+        outState.putInt(RESPONSE_CODE_KEY, code);
+    }
 
+    @Override
+    public void showServerErrorDialog(int code) {
+        if (!isErrorDialogShown) {
+            showErrorDialog(code);
+            isErrorDialogShown = true;
+            this.code = code;
+        }
+    }
+
+    private void showErrorDialog(int code) {
+
+        if (dialog == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(getString(R.string.server_error));
+            builder.setMessage(String.format(Locale.getDefault(), getString(R.string.server_error_explanation), code));
+            builder.setCancelable(false);
+            builder.setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    MainActivity.this.finish();
+                    System.exit(0);
+                }
+            });
+
+            dialog = builder.create();
+        }
+        dialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (dialog!=null)
+            dialog.dismiss();
+    }
 }

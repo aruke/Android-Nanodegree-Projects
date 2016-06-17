@@ -146,18 +146,22 @@ public class MovieGridFragment extends Fragment {
                         public void onResponse(Call<MovieApiResponse> call, Response<MovieApiResponse> response) {
                             Log.e(LOG_TAG, "onResponse: code -" + String.valueOf(response.code()));
 
-                            MovieApiResponse movieApiResponse = response.body();
+                            if (response.code()==200) {
+                                MovieApiResponse movieApiResponse = response.body();
 
-                            if (movieApiResponse.getResults() != null) {
-                                int endPosition = movies.size();
-                                int insertedItems = movies.size();
-                                movies.addAll(movieApiResponse.getResults());
-                                adapter.notifyItemRangeInserted(endPosition, insertedItems);
-                            } else {
-                                Log.e(LOG_TAG, "onResponse: results " + movieApiResponse.getResults());
-                                if (page == 1 && movies.size() == 0) {
-                                    toggleEmptyView(true);
+                                if (movieApiResponse.getResults() != null) {
+                                    int endPosition = movies.size();
+                                    int insertedItems = movies.size();
+                                    movies.addAll(movieApiResponse.getResults());
+                                    adapter.notifyItemRangeInserted(endPosition, insertedItems);
+                                } else {
+                                    Log.e(LOG_TAG, "onResponse: results " + movieApiResponse.getResults());
+                                    if (page == 1 && movies.size() == 0) {
+                                        toggleEmptyView(true);
+                                    }
                                 }
+                            }else{
+                                mListener.showServerErrorDialog(response.code());
                             }
                         }
 

@@ -12,4 +12,7 @@
     <string name="error_no_fav_movies">You haven\'t liked any movies yet</string>
     <string name="movie_tag_favourite">Favourites</string>
     <string name="nwtwork_error">No Network Available</string>
+    <string name="ok">OK</string>
+    <string name="server_error">Server Error</string>
+    <string name="server_error_explanation">The MovieDB server returned invalid response with response code %1$d. Please check the API TOKEN and base address of server you are using is correct.</string>
 </resources>
