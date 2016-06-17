@@ -11,7 +11,6 @@ import java.util.List;
 
 import me.rajanikant.movies.R;
 import me.rajanikant.movies.api.model.Review;
-import me.rajanikant.movies.api.model.Video;
 
 /**
  * Created by : rk
@@ -28,7 +27,7 @@ public class ReviewItemAdapter extends ArrayAdapter<Review>{
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_review, parent, false);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review, parent, false);
         }
 
         Review review = getItem(position);

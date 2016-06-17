@@ -30,7 +30,7 @@ public class VideoItemAdapter extends ArrayAdapter<Video> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_video, parent, false);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_video, parent, false);
         }
 
         Video video = getItem(position);
