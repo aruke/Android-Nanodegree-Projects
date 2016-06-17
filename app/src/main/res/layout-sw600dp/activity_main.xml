@@ -10,13 +10,13 @@
         class="me.rajanikant.movies.ui.TabbedViewFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="@integer/two_pane_grid_fragment_weight"
         tools:layout="@layout/fragment_tabbed_view" />
 
     <FrameLayout
         android:id="@+id/activity_main_container_layout"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="@integer/two_pane_detail_fragment_weight" />
 
 </LinearLayout>

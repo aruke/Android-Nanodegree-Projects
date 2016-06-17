@@ -57,10 +57,8 @@ public class FavMovieGridFragment extends Fragment implements LoaderManager.Load
         View view = inflater.inflate(R.layout.fragment_fav_movie_grid, container, false);
         ButterKnife.inject(this, view);
 
-        // Check for orientation
-        int rows = 2;
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
-            rows = 3;
+        // Get number of rows depending on orientation
+        int rows = getResources().getInteger(R.integer.no_of_columns_in_grid);
 
         recyclerView.setHasFixedSize(true);
         // use a linear layout manager

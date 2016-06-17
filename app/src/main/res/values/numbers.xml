@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="no_of_columns_in_grid">2</integer>
+    <integer name="two_pane_grid_fragment_weight">1</integer>
+    <integer name="two_pane_detail_fragment_weight">1</integer>
+</resources>
