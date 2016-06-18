@@ -183,7 +183,11 @@ public class MovieDetailsFragment extends Fragment {
         } catch (ActivityNotFoundException ex) {
             Intent intent = new Intent(Intent.ACTION_VIEW,
                     Uri.parse("https://www.youtube.com/watch?v=" + id));
-            startActivity(intent);
+            if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                startActivity(intent);
+            }else{
+                Snackbar.make(toolbar, "Something went wrong", Snackbar.LENGTH_SHORT).show();
+            }
         }
     }
 
