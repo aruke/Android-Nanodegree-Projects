@@ -91,6 +91,19 @@ public class MovieDetailsFragment extends Fragment {
     private ArrayList<Video> videos;
     private ArrayList<Review> reviews;
 
+    private static MovieApiInterface movieApiCall;
+    private Call<VideosResponse> getVideosCall;
+    Call<ReviewsResponse> getReviewsCall;
+
+    static {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.themoviedb.org")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        movieApiCall = retrofit.create(MovieApiInterface.class);
+    }
+
     public MovieDetailsFragment() {
         // Required empty public constructor
     }
@@ -260,14 +273,7 @@ public class MovieDetailsFragment extends Fragment {
 
             videoEmptyText.setText("Loading videos...");
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://api.themoviedb.org")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            MovieApiInterface movieApiCall = retrofit.create(MovieApiInterface.class);
-
-            Call<VideosResponse> getVideosCall = movieApiCall.getMovieVideos(id, BuildConfig.TMDB_API_TOKEN, 1);
+            getVideosCall = movieApiCall.getMovieVideos(id, BuildConfig.TMDB_API_TOKEN, 1);
             getVideosCall.enqueue(
                     new Callback<VideosResponse>() {
                         @Override
@@ -308,14 +314,7 @@ public class MovieDetailsFragment extends Fragment {
 
             reviewEmptyText.setText("Loading reviews...");
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl("http://api.themoviedb.org")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            MovieApiInterface movieApiCall = retrofit.create(MovieApiInterface.class);
-
-            Call<ReviewsResponse> getReviewsCall = movieApiCall.getMovieReviews(id, BuildConfig.TMDB_API_TOKEN, 1);
+            getReviewsCall = movieApiCall.getMovieReviews(id, BuildConfig.TMDB_API_TOKEN, 1);
             getReviewsCall.enqueue(
                     new Callback<ReviewsResponse>() {
                         @Override
@@ -387,5 +386,9 @@ public class MovieDetailsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.reset(this);
+        if (getVideosCall!=null)
+            getVideosCall.cancel();
+        if (getReviewsCall!=null)
+            getReviewsCall.cancel();
     }
 }
