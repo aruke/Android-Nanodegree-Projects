@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -51,6 +52,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MovieDetailsFragment extends Fragment {
 
     private static final String TAG = "MovieDetailsFragment";
+
+    private static final String KEY_VIDEO_LIST = "video-list";
+    private static final String KEY_REVIEW_LIST = "review-list";
 
     @InjectView(R.id.fragment_movie_details_toolbar)
     Toolbar toolbar;
@@ -84,6 +88,9 @@ public class MovieDetailsFragment extends Fragment {
     private String posterPath;
     private boolean movieLiked;
 
+    private ArrayList<Video> videos;
+    private ArrayList<Review> reviews;
+
     public MovieDetailsFragment() {
         // Required empty public constructor
     }
@@ -113,6 +120,10 @@ public class MovieDetailsFragment extends Fragment {
             backdropPath = getArguments().getString(Constants.INTENT_EXTRA_MOVIE_BACKDROP_PATH);
             ratings = getArguments().getDouble(Constants.INTENT_EXTRA_MOVIE_RATINGS);
             releaseDate = getArguments().getString(Constants.INTENT_EXTRA_MOVIE_RELEASE_DATE);
+        }
+        if (savedInstanceState != null) {
+            videos = savedInstanceState.getParcelableArrayList(KEY_VIDEO_LIST);
+            reviews = savedInstanceState.getParcelableArrayList(KEY_REVIEW_LIST);
         }
     }
 
@@ -169,8 +180,16 @@ public class MovieDetailsFragment extends Fragment {
             }
         });
 
-        populateTrailers();
-        populateReviews();
+        if (savedInstanceState != null) {
+            videos = savedInstanceState.getParcelableArrayList(KEY_VIDEO_LIST);
+            reviews = savedInstanceState.getParcelableArrayList(KEY_REVIEW_LIST);
+            Log.d(TAG, "onCreateView: vides " + (videos==null) + "    reviews " + (reviews==null) );
+            setupVideoList(videos);
+            setupReviewList(reviews);
+        }else {
+            populateTrailers();
+            populateReviews();
+        }
 
         return view;
     }
@@ -260,15 +279,16 @@ public class MovieDetailsFragment extends Fragment {
 
                             List<Video> results = videosResponse.getResults();
 
-                            if (results.size() == 0 && videoEmptyText!=null) {
-                                videoEmptyText.setText("No videos Available");
-                                return;
+                            if (videos==null)
+                                videos = new ArrayList<>();
+                            else
+                                videos.clear();
+
+                            for (Video result : results) {
+                                videos.add(result);
                             }
 
-                            VideoItemAdapter adapter = new VideoItemAdapter(getActivity(), results);
-                            videoList.setAdapter(adapter);
-
-                            Utility.setListViewHeightBasedOnChildren(videoList);
+                            setupVideoList(videos);
                         }
 
                         @Override
@@ -307,15 +327,16 @@ public class MovieDetailsFragment extends Fragment {
 
                             List<Review> results = reviewsResponse.getResults();
 
-                            if (results.size() == 0 && reviewEmptyText!=null) {
-                                reviewEmptyText.setText("No reviews Available");
-                                return;
+                            if (reviews==null)
+                                reviews = new ArrayList<>();
+                            else
+                                reviews.clear();
+
+                            for (Review result : results) {
+                                reviews.add(result);
                             }
 
-                            ReviewItemAdapter adapter = new ReviewItemAdapter(getActivity(), results);
-                            reviewList.setAdapter(adapter);
-
-                            Utility.setListViewHeightBasedOnChildren(reviewList);
+                            setupReviewList(reviews);
                         }
 
                         @Override
@@ -327,6 +348,39 @@ public class MovieDetailsFragment extends Fragment {
         } else {
             Log.e(TAG, "populateMovies: No network available");
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList(KEY_VIDEO_LIST, videos);
+        outState.putParcelableArrayList(KEY_REVIEW_LIST, reviews);
+    }
+
+    private void setupVideoList(ArrayList<Video> videos) {
+
+        if (videos.size() == 0 && videoEmptyText!=null) {
+            videoEmptyText.setText("No videos Available");
+            return;
+        }
+
+        VideoItemAdapter videoAdapter = new VideoItemAdapter(getActivity(), videos);
+        videoList.setAdapter(videoAdapter);
+
+        Utility.setListViewHeightBasedOnChildren(videoList);
+    }
+
+    private void setupReviewList(ArrayList<Review> reviews) {
+
+        if (reviews.size() == 0 && reviewEmptyText!=null) {
+            reviewEmptyText.setText("No reviews Available");
+            return;
+        }
+
+        ReviewItemAdapter reviewAdapter = new ReviewItemAdapter(getActivity(), reviews);
+        reviewList.setAdapter(reviewAdapter);
+
+        Utility.setListViewHeightBasedOnChildren(reviewList);
     }
 
     @Override
