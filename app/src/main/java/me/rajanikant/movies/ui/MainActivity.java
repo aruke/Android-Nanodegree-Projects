@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
     private static final String ERROR_DIALOG_KEY = "error_shown";
     private static final String RESPONSE_CODE_KEY = "response_code";
+    private static final String DETAIL_FRAGMENT_TAG = "details-tag";
+
     @Optional
     @InjectView(R.id.activity_main_container_layout)
     FrameLayout detailsFragmentContainer;
@@ -51,12 +53,14 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         if (Utility.isTwoPaned() && getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
-            MovieDetailPlaceholderFragment fragment = MovieDetailPlaceholderFragment.newInstance();
 
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.activity_main_container_layout, fragment)
-                    .commit();
+            if (savedInstanceState==null) {
+                MovieDetailPlaceholderFragment fragment = MovieDetailPlaceholderFragment.newInstance();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.activity_main_container_layout, fragment)
+                        .commit();
+            }
         }
 
         if (savedInstanceState != null && savedInstanceState.getBoolean(ERROR_DIALOG_KEY)) {
@@ -79,11 +83,17 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         if (Utility.isTwoPaned()) {
 
-            MovieDetailsFragment fragment = MovieDetailsFragment.newInstance(id, title, overview, releaseDate, ratings, backdropPath, posterPath);
+            MovieDetailsFragment fragment;
+
+            fragment = (MovieDetailsFragment) getSupportFragmentManager().findFragmentByTag(DETAIL_FRAGMENT_TAG);
+            if (fragment!=null && fragment.getMovieId()==movie.getId())
+                return;
+
+            fragment = MovieDetailsFragment.newInstance(id, title, overview, releaseDate, ratings, backdropPath, posterPath);
 
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.activity_main_container_layout, fragment)
+                    .replace(R.id.activity_main_container_layout, fragment, DETAIL_FRAGMENT_TAG)
                     .commit();
 
         } else {

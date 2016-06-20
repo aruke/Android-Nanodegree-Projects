@@ -382,6 +382,10 @@ public class MovieDetailsFragment extends Fragment {
         Utility.setListViewHeightBasedOnChildren(reviewList);
     }
 
+    public int getMovieId() {
+        return id;
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
