@@ -31,10 +31,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             MovieDetailsFragment fragment = MovieDetailsFragment.newInstance(id, title, overview, releaseDate, ratings, backdropPath, posterPath);
 
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.activity_movie_details_fragment_container, fragment)
-                    .commit();
+            if (savedInstanceState==null)
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.activity_movie_details_fragment_container, fragment)
+                        .commit();
 
         } else {
             // Something went wrong
