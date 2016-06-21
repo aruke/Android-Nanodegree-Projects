@@ -193,6 +193,14 @@ public class MovieDetailsFragment extends Fragment {
             }
         });
 
+        reviewList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Review review = (Review) parent.getAdapter().getItem(position);
+                openReviewInBrowser(review.getUrl());
+            }
+        });
+
         if (savedInstanceState != null) {
             videos = savedInstanceState.getParcelableArrayList(KEY_VIDEO_LIST);
             reviews = savedInstanceState.getParcelableArrayList(KEY_REVIEW_LIST);
@@ -220,6 +228,16 @@ public class MovieDetailsFragment extends Fragment {
             }else{
                 Snackbar.make(toolbar, "Something went wrong", Snackbar.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private void openReviewInBrowser(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse(url));
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivity(intent);
+        }else{
+            Snackbar.make(toolbar, "Something went wrong", Snackbar.LENGTH_SHORT).show();
         }
     }
 

@@ -56,10 +56,6 @@ public class ReviewItemAdapter extends BaseAdapter {
         ((TextView) convertView.findViewById(R.id.item_review_content)).setText(review.getContent());
         ((TextView) convertView.findViewById(R.id.item_review_author)).setText(review.getAuthor());
 
-        // To make item non clickable
-        convertView.setEnabled(false);
-        convertView.setOnClickListener(null);
-
         return convertView;
     }
 }
