@@ -1,1 +1,1 @@
-include ':app', ':libjoker'
+include ':app', ':libjoker', ':joker'
