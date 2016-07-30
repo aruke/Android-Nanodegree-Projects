@@ -10,6 +10,7 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -22,8 +23,10 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
+    compile project(':joker')
+    compile project(path: ':backend', configuration: 'android-endpoints')
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.android.support:design:24.0.0'
     compile 'com.jakewharton:butterknife:5.1.1'
-    compile project(':joker')
+    compile 'com.google.android.gms:play-services-ads:9.2.1'
 }
