@@ -4,13 +4,14 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
+import com.dd.CircularProgressButton;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
@@ -27,7 +28,7 @@ import me.rajanikant.joker.lib.JokeActivity;
 public class MainFragment extends Fragment {
 
     @InjectView(R.id.fragment_main_button_tell_joke)
-    Button buttonTellJoke;
+    CircularProgressButton buttonTellJoke;
 
     private static JokeApi myApiService;
 
@@ -41,6 +42,7 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         ButterKnife.inject(this, view);
+        buttonTellJoke.setIndeterminateProgressMode(true);
         return view;
     }
 
@@ -50,7 +52,7 @@ public class MainFragment extends Fragment {
     }
 
     private void startJokeActivity(String joke) {
-        Intent intent = new Intent(JokeActivity.INTENT_TELL_A_JOKE);
+        Intent intent = new Intent(getActivity(), JokeActivity.class);
         intent.putExtra(JokeActivity.EXTRA_STRING_JOKE, joke);
         intent.putExtra(JokeActivity.EXTRA_BOOLEAN_SET_UP_BUTTON_ENABLED, true);
         try {
@@ -67,6 +69,14 @@ public class MainFragment extends Fragment {
     }
 
     class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
+
+        boolean mError;
+
+        @Override
+        protected void onPreExecute() {
+            buttonTellJoke.setProgress(50);
+            mError = false;
+        }
 
         @Override
         protected String doInBackground(Void... params) {
@@ -87,13 +97,25 @@ public class MainFragment extends Fragment {
             try {
                 return myApiService.tellJoke().execute().getContents();
             } catch (IOException e) {
+                mError = true;
+                e.printStackTrace();
                 return e.getMessage();
             }
         }
 
         @Override
         protected void onPostExecute(String result) {
-            startJokeActivity(result);
+            buttonTellJoke.setProgress(0);
+            if (mError){
+                Snackbar.make(buttonTellJoke, result, Snackbar.LENGTH_SHORT).show();
+            }else {
+                startJokeActivity(result);
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+            buttonTellJoke.setProgress(0);
         }
     }
 }

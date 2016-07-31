@@ -21,10 +21,16 @@
         android:contentDescription="@string/welcome_face_description"
         android:src="@drawable/welcome_face" />
 
-    <Button
+    <com.dd.CircularProgressButton
         android:id="@+id/fragment_main_button_tell_joke"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tell_me_a_joke" />
+        android:paddingLeft="@dimen/activity_margin"
+        android:paddingRight="@dimen/activity_margin"
+        android:textColor="#FFF"
+        app:cpb_textIdle="@string/tell_me_a_joke"
+        app:cpb_selectorIdle="@color/colorPrimary"
+        app:cpb_colorProgress="@color/colorPrimary"
+        app:cpb_colorIndicatorBackground="@color/colorPrimary" />
 
 </LinearLayout>
