@@ -27,6 +27,11 @@ import me.rajanikant.joker.lib.JokeActivity;
 
 public class MainFragment extends Fragment {
 
+    // For read device use Network IP of host computer
+    private static final String ROOT_URL = "http://192.168.43.56:8080";
+    // For emulators use
+    //private static final String ROOT_URL = "http://10.0.2.2:8080";
+
     @InjectView(R.id.fragment_main_button_tell_joke)
     CircularProgressButton buttonTellJoke;
 
@@ -83,7 +88,7 @@ public class MainFragment extends Fragment {
             if (myApiService == null) {
                 JokeApi.Builder builder = new JokeApi.Builder(AndroidHttp.newCompatibleTransport(),
                         new AndroidJsonFactory(), null)
-                        .setRootUrl("http://192.168.43.56:8080/_ah/api/")
+                        .setRootUrl(ROOT_URL + "/_ah/api/")
                         .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                             @Override
                             public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
