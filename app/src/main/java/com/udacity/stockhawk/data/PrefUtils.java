@@ -88,4 +88,33 @@ public final class PrefUtils {
         editor.apply();
     }
 
+    public static void addInvalidStocks(Context context, Set<String> invalidStocks) {
+        String key = context.getString(R.string.pref_invalid_stocks_key);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putStringSet(key, invalidStocks);
+        editor.apply();
+
+        for (String invalidStock : invalidStocks) {
+            PrefUtils.removeStock(context, invalidStock);
+        }
+    }
+
+    public static Set<String> getInvalidStocks(Context context) {
+        String stocksKey = context.getString(R.string.pref_invalid_stocks_key);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getStringSet(stocksKey, new HashSet<String>());
+    }
+
+    public static void clearInvalidStocks(Context context) {
+        String key = context.getString(R.string.pref_invalid_stocks_key);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putStringSet(key, new HashSet<String>());
+        editor.apply();
+    }
+
 }

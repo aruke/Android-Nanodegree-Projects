@@ -52,6 +52,7 @@ public final class QuoteSyncJob {
 
             Set<String> stockPref = PrefUtils.getStocks(context);
             Set<String> stockCopy = new HashSet<>();
+            Set<String> invalidStocks = new HashSet<>();
             stockCopy.addAll(stockPref);
             String[] stockArray = stockPref.toArray(new String[stockPref.size()]);
 
@@ -74,6 +75,13 @@ public final class QuoteSyncJob {
 
                 Stock stock = quotes.get(symbol);
                 StockQuote quote = stock.getQuote();
+
+                // Check if the symbol is associated with valid stock or not
+                if (stock.getName() == null || stock.getName().isEmpty()) {
+                    Timber.w("Symbol '%s' is invalid", stock.getSymbol());
+                    invalidStocks.add(stock.getSymbol());
+                    continue;
+                }
 
                 float price = quote.getPrice().floatValue();
                 float change = quote.getChange().floatValue();
@@ -104,6 +112,8 @@ public final class QuoteSyncJob {
                 quoteCVs.add(quoteCV);
 
             }
+
+            PrefUtils.addInvalidStocks(context, invalidStocks);
 
             context.getContentResolver()
                     .bulkInsert(

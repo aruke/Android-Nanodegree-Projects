@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,8 @@ import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
 import com.udacity.stockhawk.sync.QuoteSyncJob;
+
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -109,6 +112,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
+    private void showInvalidStockError() {
+        Set<String> invalidStocks = PrefUtils.getInvalidStocks(this);
+        int size = invalidStocks.size();
+        String message;
+
+        if (size == 1) {
+            message = getString(R.string.toast_invalid_stock_single, invalidStocks.iterator().next());
+        } else if (size > 1) {
+            String quotes = TextUtils.join(getString(R.string.invalid_stock_separator), invalidStocks.toArray());
+            message = getString(R.string.toast_invalid_stock_plural, quotes);
+        } else {
+            return;
+        }
+
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        PrefUtils.clearInvalidStocks(this);
+    }
+
     public void button(View view) {
         new AddStockDialog().show(getFragmentManager(), "StockDialogFragment");
     }
@@ -138,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        showInvalidStockError();
         swipeRefreshLayout.setRefreshing(false);
 
         if (data.getCount() != 0) {
