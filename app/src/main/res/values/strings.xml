@@ -36,5 +36,6 @@
     <string name="toast_invalid_stock_single">Stock %s is invalid.</string>
     <string name="toast_invalid_stock_plural">Stocks %s are invalid.</string>
     <string name="invalid_stock_separator">, </string>
+    <string name="stocks_empty">Stocks Empty</string>
 
 </resources>

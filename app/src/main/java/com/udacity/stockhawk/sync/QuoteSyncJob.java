@@ -2,6 +2,7 @@ package com.udacity.stockhawk.sync;
 
 import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
+import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,8 +10,10 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.udacity.stockhawk.R;
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
+import com.udacity.stockhawk.widget.StockWidget;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -122,6 +125,10 @@ public final class QuoteSyncJob {
 
             Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
             context.sendBroadcast(dataUpdatedIntent);
+
+            ComponentName name = new ComponentName(context, StockWidget.class);
+            int[] appWidgetIds = AppWidgetManager.getInstance(context).getAppWidgetIds(name);
+            AppWidgetManager.getInstance(context).notifyAppWidgetViewDataChanged(appWidgetIds, R.id.stock_widget_list_view);
 
         } catch (IOException exception) {
             Timber.e(exception, "Error fetching stock quotes");
