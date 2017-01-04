@@ -38,4 +38,6 @@
     <string name="invalid_stock_separator">, </string>
     <string name="stocks_empty">Stocks Empty</string>
 
+    <string name="title_activity_stock_details">Stock Details</string>
+
 </resources>
