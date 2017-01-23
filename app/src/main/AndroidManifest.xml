@@ -55,7 +55,8 @@
         <activity
             android:name=".ui.StockDetailsActivity"
             android:label="@string/title_activity_stock_details"
-            android:parentActivityName=".ui.MainActivity">
+            android:parentActivityName=".ui.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.udacity.stockhawk.ui.MainActivity" />
