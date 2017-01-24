@@ -3,7 +3,6 @@ package com.udacity.stockhawk.widget;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -14,8 +13,6 @@ import com.udacity.stockhawk.data.PrefUtils;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
-
-import static com.udacity.stockhawk.data.Contract.Quote;
 
 public class StockWidgetService extends RemoteViewsService {
 
@@ -96,7 +93,6 @@ public class StockWidgetService extends RemoteViewsService {
 
         @Override
         public void onDataSetChanged() {
-            Log.e("TAG", "onDataSetChanged: ");
             onDestroy();
             mCursor = mContext.getContentResolver().query(
                     Contract.Quote.URI,

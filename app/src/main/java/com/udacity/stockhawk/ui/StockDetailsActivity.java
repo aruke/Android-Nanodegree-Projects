@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +35,6 @@ import butterknife.ButterKnife;
 
 public class StockDetailsActivity extends AppCompatActivity {
 
-    private static final String TAG = "StockDetailsActivity";
     @BindView(R.id.stock_details_chart)
     LineChart chartView;
     @BindView(R.id.stock_details_name)
@@ -56,7 +54,7 @@ public class StockDetailsActivity extends AppCompatActivity {
         if (actionBar != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Stock Details");
+            actionBar.setTitle(R.string.title_activity_stock_details);
         }
 
         Uri data = getIntent().getData();
@@ -77,8 +75,6 @@ public class StockDetailsActivity extends AppCompatActivity {
                 String stockName = cursor.getString(Contract.Quote.POSITION_NAME);
                 String stockExchange = cursor.getString(Contract.Quote.POSITION_STOCK_EXCHANGE);
 
-                Log.w(TAG, "onCreate: stockName '" + stockName + "', exchange '" + stockExchange + "'");
-
                 cursor.close();
 
                 // Setup Actionbar Title
@@ -88,7 +84,7 @@ public class StockDetailsActivity extends AppCompatActivity {
 
                 // Setup other text
                 textName.setText(stockName);
-                textExchange.setText(stockExchange + " Stock Exchange");
+                textExchange.setText(String.format(getString(R.string.stock_exchange), stockExchange));
 
                 // Setup graph chart
                 setupChartView(history);
@@ -150,7 +146,7 @@ public class StockDetailsActivity extends AppCompatActivity {
 
     private void fallback() {
         // If error during activity then close the activity
-        Toast.makeText(this, "Error : Can't display details", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.stock_details_empty_message, Toast.LENGTH_SHORT).show();
         finish();
     }
 
