@@ -5,42 +5,42 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    android:paddingBottom="8dp"
+    android:paddingEnd="8dp"
+    android:paddingStart="8dp"
+    android:paddingTop="8dp">
 
     <TextView
         android:id="@+id/wgt_symbol"
         style="@style/StockSymbolTextStyle"
-        android:textAllCaps="true"
-        android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="left|center_vertical"
+        android:gravity="start|center_vertical"
+        android:textAllCaps="true"
+        android:textSize="18sp"
         tools:text="GOOG" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="right">
+        android:gravity="end">
 
         <TextView
             android:id="@+id/wgt_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10sp"
+            android:layout_marginEnd="10sp"
             tools:text="1000.00" />
 
         <TextView
             android:id="@+id/wgt_change"
-            android:padding="4dp"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
+            android:padding="4dp"
+            android:paddingEnd="3dp"
+            android:paddingStart="3dp"
+            android:textStyle="bold"
             tools:text="100%" />
     </LinearLayout>
 </LinearLayout>

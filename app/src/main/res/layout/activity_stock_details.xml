@@ -30,8 +30,8 @@
                 android:id="@+id/stock_details_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="72dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginStart="72dp"
+                android:layout_marginEnd="16dp"
                 android:textColor="#FFFF"
                 android:textSize="24sp" />
 
@@ -40,8 +40,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:layout_marginLeft="72dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginStart="72dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="8dp" />
         </LinearLayout>
 
@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
-        android:contentDescription="Stock history graph"
+        android:contentDescription="@string/stock_history_graph"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>
