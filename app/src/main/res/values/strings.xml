@@ -40,5 +40,6 @@
     <string name="title_activity_stock_details">Stock Details</string>
     <string name="stock_exchange">%1$s Stock Exchange</string>
     <string name="stock_details_empty_message">Error : Can\'t display details</string>
+    <string name="add_new_stock_symbol">Add new stock symbol</string>
 
 </resources>

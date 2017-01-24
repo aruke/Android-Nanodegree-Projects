@@ -34,7 +34,7 @@
         app:elevation="6dp"
         app:fabSize="normal"
         app:pressedTranslationZ="12dp"
-        android:contentDescription="Add new stock symbol"/>
+        android:contentDescription="@string/add_new_stock_symbol"/>
 
     <TextView
         android:id="@+id/error"
