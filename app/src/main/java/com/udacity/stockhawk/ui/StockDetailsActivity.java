@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -87,7 +88,7 @@ public class StockDetailsActivity extends AppCompatActivity {
                 textExchange.setText(String.format(getString(R.string.stock_exchange), stockExchange));
 
                 // Setup graph chart
-                setupChartView(history);
+                setupChartView(history, stockSymbol);
 
             } else {
                 // Cursor null
@@ -99,10 +100,10 @@ public class StockDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void setupChartView(String historyString) {
+    private void setupChartView(String historyString, String stockSymbol) {
         final HistoryData historyData = new HistoryData(historyString);
 
-        LineDataSet dataSet = new LineDataSet(historyData.getChartEntries(), "Stock Value");
+        LineDataSet dataSet = new LineDataSet(historyData.getChartEntries(), stockSymbol);
 
         IAxisValueFormatter formatter = new IAxisValueFormatter() {
 
@@ -115,13 +116,17 @@ public class StockDetailsActivity extends AppCompatActivity {
         XAxis xAxis = chartView.getXAxis();
         xAxis.setValueFormatter(formatter);
         xAxis.setGranularity(1f);
+        xAxis.setTextColor(Color.WHITE);
+
+        YAxis yAxisLeft = chartView.getAxisLeft();
+        YAxis yAxisRight = chartView.getAxisRight();
+        yAxisLeft.setTextColor(Color.WHITE);
+        yAxisRight.setTextColor(Color.WHITE);
 
         dataSet.setDrawCircles(false);
-        dataSet.setDrawValues(true);
+        dataSet.setDrawValues(false);
         dataSet.setMode(LineDataSet.Mode.LINEAR);
         dataSet.setColor(Color.WHITE);
-        dataSet.setColor(Color.BLUE);
-        dataSet.setValueTextColor(Color.WHITE);
 
         // View setup
         chartView.setData(new LineData(dataSet));
@@ -133,13 +138,15 @@ public class StockDetailsActivity extends AppCompatActivity {
         // enable touch gestures
         chartView.setTouchEnabled(true);
         chartView.setDragDecelerationFrictionCoef(0.9f);
+        // Description Text Color
+        chartView.setAutoScaleMinMaxEnabled(true);
         // enable scaling and dragging
         chartView.setDragEnabled(true);
         chartView.setScaleEnabled(true);
-        chartView.setDrawGridBackground(false);
         chartView.setHighlightPerDragEnabled(false);
 
-        chartView.setViewPortOffsets(0f, 0f, 0f, 0f);
+        chartView.getLegend().setTextColor(Color.GRAY);
+        chartView.getLegend().setTextSize(16f);
 
         chartView.invalidate();
     }
