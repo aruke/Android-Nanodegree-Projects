@@ -1,0 +1,8 @@
+<resources xmlns:xliff="http://schemas.android.com/tools">
+    <string name="app_name">Sunshine</string>
+    <string name="message">Watch face tapped</string>
+    <string name="digital_watch_face_name">Sunshine</string>
+    <string name="format_temperature">
+            <xliff:g id="temp">%1.0f</xliff:g>\u00B0
+    </string>
+</resources>
