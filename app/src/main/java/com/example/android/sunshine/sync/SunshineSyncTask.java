@@ -106,6 +106,9 @@ public class SunshineSyncTask {
 
             /* If the code reaches this point, we have successfully performed our sync */
 
+                /* So start wear sync service to sync data with wear */
+                SyncWearService.startActionSyncWear(context);
+
             }
 
         } catch (Exception e) {

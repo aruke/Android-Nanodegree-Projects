@@ -75,6 +75,11 @@
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
+
+        <!-- This intent service sends data to wearable after successful sync -->
+        <service
+            android:name=".sync.SyncWearService"
+            android:exported="false" />
     </application>
 
 </manifest>
