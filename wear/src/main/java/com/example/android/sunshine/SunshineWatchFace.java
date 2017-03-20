@@ -328,7 +328,7 @@ public class SunshineWatchFace extends CanvasWatchFaceService {
             mSecondaryTextPaint.setTextSize(oneUnitHeight * 2);
             canvas.drawText(minTempString,
                     innerRect.left + oneUnitWidth * 11,
-                    innerRect.top + oneUnitHeight * 13,
+                    innerRect.bottom - oneUnitHeight * 3,
                     mSecondaryTextPaint);
 
             // Draw Bitmap
