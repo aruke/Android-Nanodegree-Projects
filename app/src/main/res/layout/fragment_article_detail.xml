@@ -8,7 +8,8 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        app:elevation="@dimen/elevation_app_bar">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -48,6 +49,7 @@
         app:behavior_overlapTop="@dimen/detail_card_top_overlay">
 
         <me.rajanikant.xyzreader.ui.MaxWidthLinearLayout
+            android:id="@+id/contents"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -116,6 +118,8 @@
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
         android:src="@drawable/ic_share"
-        app:backgroundTint="@color/accent" />
+        app:backgroundTint="@color/accent"
+        app:elevation="@dimen/elevation_fab"
+        app:pressedTranslationZ="@dimen/elevation_fab_pressed" />
 
 </android.support.design.widget.CoordinatorLayout>

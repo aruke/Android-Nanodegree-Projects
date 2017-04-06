@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.ShareCompat;
@@ -49,8 +50,9 @@ public class ArticleDetailFragment extends Fragment implements
     private ColorDrawable mStatusBarColorDrawable;
 
     private ImageView mPhotoView;
-    AppBarLayout appBarLayout;
-    int mScrollY;
+    private AppBarLayout mAppBarLayout;
+    private int mScrollY;
+    private boolean mIsCard = false;
 
 
     /**
@@ -98,6 +100,7 @@ public class ArticleDetailFragment extends Fragment implements
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
         mPhotoView = (ImageView) mRootView.findViewById(R.id.photo);
         mStatusBarColorDrawable = new ColorDrawable(0);
+        mIsCard = getActivityCast().getResources().getBoolean(R.bool.detail_is_card);
 
         mRootView.findViewById(R.id.share_fab).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,8 +113,8 @@ public class ArticleDetailFragment extends Fragment implements
         });
 
 
-        appBarLayout = (AppBarLayout) mRootView.findViewById(R.id.app_bar);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+        mAppBarLayout = (AppBarLayout) mRootView.findViewById(R.id.app_bar);
+        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 mScrollY = verticalOffset;
@@ -152,6 +155,9 @@ public class ArticleDetailFragment extends Fragment implements
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mIsCard) {
+            mRootView.findViewById(R.id.contents).setElevation(getResources().getDimension(R.dimen.elevation_card));
+        }
 
         if (mCursor != null) {
             mRootView.setAlpha(0);
@@ -227,10 +233,10 @@ public class ArticleDetailFragment extends Fragment implements
     }
 
     public int getUpButtonFloor() {
-        if (appBarLayout == null) {
+        if (mAppBarLayout == null) {
             return Integer.MAX_VALUE;
         } else {
-            return appBarLayout.getTotalScrollRange() + mScrollY;
+            return mAppBarLayout.getTotalScrollRange() + mScrollY;
         }
     }
 }
