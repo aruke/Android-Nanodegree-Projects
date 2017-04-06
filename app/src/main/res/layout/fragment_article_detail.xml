@@ -115,6 +115,6 @@
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="@dimen/fab_margin"
         android:src="@drawable/ic_share"
-        android:contentDescription="@string/action_share" />
+        app:backgroundTint="@color/accent" />
 
 </android.support.design.widget.CoordinatorLayout>
