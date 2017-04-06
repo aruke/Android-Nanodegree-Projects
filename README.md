@@ -11,7 +11,7 @@ This repository has source code of android application 'XYZ Reader' and it is a 
 ## Screenshots
 
  Screen | List | Details |
- --- | ---
+ --- | --- | --
  Phone | ![Phone ](/captures/phone_list.png) | ![Phone ](/captures/phone_details.png)
  Tablet | ![Tablet ](/captures/tablet_list.png) | ![Tablet ](/captures/tablet_details.png)
  Phone Landscape | ![Phone ](/captures/phone_list_land.png) | ![Phone ](/captures/phone_details_land.png)
