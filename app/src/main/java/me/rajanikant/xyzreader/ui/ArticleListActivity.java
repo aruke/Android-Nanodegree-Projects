@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import me.rajanikant.xyzreader.R;
 import me.rajanikant.xyzreader.data.ArticleLoader;
 import me.rajanikant.xyzreader.data.ItemsContract;
@@ -140,9 +142,9 @@ public class ArticleListActivity extends AppCompatActivity implements
                             DateUtils.FORMAT_ABBREV_ALL).toString()
                             + " by "
                             + mCursor.getString(ArticleLoader.Query.AUTHOR));
-            holder.thumbnailView.setImageUrl(
-                    mCursor.getString(ArticleLoader.Query.THUMB_URL),
-                    ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
+            Picasso.with(ArticleListActivity.this)
+                    .load(mCursor.getString(ArticleLoader.Query.THUMB_URL))
+                    .into(holder.thumbnailView);
             holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
         }
 
