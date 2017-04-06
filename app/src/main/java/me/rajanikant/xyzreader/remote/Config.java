@@ -9,7 +9,10 @@ public class Config {
     static {
         URL url = null;
         try {
-            url = new URL("https://dl.dropboxusercontent.com/u/231329/xyzreader_data/data.json" );
+            // This URL is not working anymore. So I am changing it to static contents of another Nanodegree Student
+            // url = new URL("https://dl.dropboxusercontent.com/u/231329/xyzreader_data/data.json" );
+
+            url = new URL("https://raw.githubusercontent.com/Protino/dump/master/Lego/data.json" );
         } catch (MalformedURLException ignored) {
             // TODO: throw a real error
         }
