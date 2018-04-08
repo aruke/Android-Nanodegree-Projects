@@ -1,3 +1,5 @@
+> This repository is archived and there will be no more changes to this project.
+
 # UAND-P5
 This repository has source code of android application 'XYZ Reader' and it is a part of Udacity's Android Nanodegree course.
 
