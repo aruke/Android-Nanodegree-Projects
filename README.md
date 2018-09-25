@@ -1,4 +1,6 @@
-# UAND-P4
+> This project is archived and there will be no updates to this app.
+
+# UAND-P3
 This repository has StockHawk application source code for Udacity Android Nanodegree program.
 
 ## Steps to import project
