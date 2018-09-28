@@ -1,0 +1,11 @@
+<resources>
+    <!-- Titles -->
+    <string name="app_name">Build It Bigger</string>
+
+    <!-- Content Descriptions-->
+    <string name="welcome_face_description">Welcome Face</string>
+
+    <!-- Strings -->
+    <string name="welcome_message">Hey There!</string>
+    <string name="tell_me_a_joke">Tell Me a Joke</string>
+</resources>

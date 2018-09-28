@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Joker Library</string>
+    <string name="activity_joke_empty_content">I\'m just joking!! There\'s no joke here.</string>
+</resources>
