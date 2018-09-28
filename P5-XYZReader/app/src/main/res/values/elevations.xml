@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Elevation & shadows : https://material.io/guidelines/material-design/elevation-shadows.html -->
+
+    <!-- Resting Elevations -->
+    <dimen name="elevation_fab">6dp</dimen>
+    <dimen name="elevation_app_bar">4dp</dimen>
+    <dimen name="elevation_card">2dp</dimen>
+    <dimen name="elevation_refresh_layout">3dp</dimen>
+
+    <!-- Pressed Elevations -->
+    <dimen name="elevation_fab_pressed">12dp</dimen>
+    <dimen name="elevation_card_pressed">8dp</dimen>
+</resources>
