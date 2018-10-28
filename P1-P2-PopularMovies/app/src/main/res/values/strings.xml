@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Popular Movies</string>
+    <string name="action_settings">Settings</string>
+    <string name="movie_poster">Movie Poster</string>
+    <string name="rating_icon_content_description">Ratings of movie</string>
+    <string name="title_activity_movie_details">MovieDetailsActivity</string>
+    <string name="movie_tag_top_rated">Top Rated</string>
+    <string name="movie_tag_popular">Popular</string>
+    <string name="action_view_on_github">View on GitHub</string>
+    <string name="project_github_link">https://github.com/rajanikantdeshmukh/UAND-P2</string>
+    <string name="error_loading_movies">Error while loading Movies</string>
+    <string name="error_no_fav_movies">You haven\'t liked any movies yet</string>
+    <string name="movie_tag_favourite">Favourites</string>
+    <string name="nwtwork_error">No Network Available</string>
+    <string name="ok">OK</string>
+    <string name="server_error">Server Error</string>
+    <string name="server_error_explanation">The MovieDB server returned invalid response with response code %1$d. Please check the API TOKEN and base address of server you are using is correct.</string>
+</resources>

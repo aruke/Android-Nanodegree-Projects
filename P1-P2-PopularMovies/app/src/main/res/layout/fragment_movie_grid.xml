@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MovieGridFragment">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/fragment_movie_grid_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="2dp"
+        android:scrollbars="vertical"/>
+
+    <TextView
+        android:id="@+id/fragment_movie_grid_empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:drawableTop="@drawable/ic_cloud_off"
+        android:drawablePadding="16dp"
+        android:text="@string/error_loading_movies"
+        android:textSize="@dimen/empty_view_text_size"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

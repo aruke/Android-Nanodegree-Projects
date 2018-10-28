@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">32dp</dimen>
+    <dimen name="activity_vertical_margin">32dp</dimen>
+    <dimen name="item_movie_card_height">240dp</dimen>
+    <dimen name="margin_movie_card">4dp</dimen>
+    <dimen name="padding_gradient_overlay">8dp</dimen>
+    <dimen name="margin_text_rating">6dp</dimen>
+    <dimen name="size_icon_rating">16dp</dimen>
+    <dimen name="size_text_rating">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="backdrop_height">360dp</dimen>
+    <dimen name="detail_card_text_size">18sp</dimen>
+    <dimen name="detail_card_text_size_small">16sp</dimen>
+    <dimen name="empty_view_text_size">18sp</dimen>
+</resources>
