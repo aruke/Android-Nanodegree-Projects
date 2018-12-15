@@ -1,7 +1,5 @@
-> This repository is archived and there will be no more changes to this project.
-
 # UAND-P4
-This repository has android application 'Build It Bigger' and it is a part of Udacity's Android Nanodegree course.
+This directory has android application 'Build It Bigger' and it is a part of Udacity's Android Nanodegree course.
 
 ### Steps for building
 
