@@ -1,5 +1,3 @@
-> This repository is archived and there will be no more changes to this project.
-
 # UAND-P6 : Go Ubiquitous
 
 ## Steps to import project
@@ -14,4 +12,4 @@
 
  Round Wear | Square Wear
  --- | ---
- ![Round Wear](/captures/round.png) | ![Square Wear](/captures/square.png)
+ ![Round Wear](captures/round.png) | ![Square Wear](captures/square.png)
